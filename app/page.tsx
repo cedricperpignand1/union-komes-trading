@@ -4,7 +4,7 @@ const phoneDisplay = "786-599-8099";
 const phoneRaw = "7865998099";
 const email = "cedricperpignand@gmail.com";
 
-const HERO_PANEL_IMAGE_SRC = "/hero-panel.jpg";
+const HERO_PANEL_IMAGE_SRC = "/panel.jpg";
 
 export default function Home() {
   return (
