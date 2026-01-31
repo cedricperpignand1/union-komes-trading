@@ -1,503 +1,384 @@
-import type { CSSProperties } from "react";
-
 const phone = "(305) 555-0147"; // placeholder
 const email = "sales@unionkomestrading.com"; // placeholder
 
 export default function Home() {
   return (
-    <main style={styles.main}>
-      <div style={styles.bg} />
+    <main className="wrap">
+      <div className="bg" />
 
-      <header style={styles.header}>
-        <div style={styles.brand}>
-          <div style={styles.logo}>UK</div>
+      <header className="header">
+        <div className="brand">
+          <div className="logo">UK</div>
           <div>
-            <div style={styles.brandName}>UNION KOMES TRADING L.L.C.</div>
-            <div style={styles.brandSub}>Miami, FL</div>
+            <div className="brandName">UNION KOMES TRADING L.L.C.</div>
+            <div className="brandSub">Miami, FL</div>
           </div>
         </div>
 
-        <nav style={styles.nav}>
-          <a style={styles.navLink} href="#services">
-            Services
-          </a>
-          <a style={styles.navLink} href="#about">
-            About
-          </a>
-          <a style={styles.navLink} href="#contact">
-            Contact
-          </a>
-          <a style={styles.navCta} href="#contact">
+        <nav className="nav">
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a className="cta" href="#contact">
             Get a Quote
           </a>
         </nav>
       </header>
 
-      <section style={styles.hero}>
-        <div style={styles.heroGrid}>
+      <section className="hero">
+        <div className="heroGrid">
           <div>
-            <div style={styles.pill}>
-              <span style={styles.pillDot} />
+            <div className="pill">
+              <span className="dot" />
               Reliable sourcing • Fast communication • Clear terms
             </div>
 
-            <h1 style={styles.h1}>
-              Modern trading & sourcing,{" "}
-              <span style={styles.h1Accent}>built for speed</span>.
+            <h1 className="h1">
+              Modern trading & sourcing, <span className="accent">built for speed</span>.
             </h1>
 
-            <p style={styles.lead}>
+            <p className="lead">
               UNION KOMES TRADING L.L.C. helps clients move products efficiently
-              with dependable sourcing, transparent updates, and logistics-first
-              execution.
+              with dependable sourcing, transparent updates, and logistics-first execution.
             </p>
 
-            <div style={styles.heroBtns}>
-              <a href="#contact" style={styles.primaryBtn}>
+            <div className="btnRow">
+              <a className="btnPrimary" href="#contact">
                 Request a Quote
               </a>
-              <a href="#services" style={styles.secondaryBtn}>
+              <a className="btnSecondary" href="#services">
                 View Services
               </a>
             </div>
 
-            <div style={styles.infoGrid}>
-              <div style={styles.infoCard}>
-                <div style={styles.infoTitle}>Phone</div>
-                <div style={styles.infoText}>{phone}</div>
+            <div className="infoGrid">
+              <div className="infoCard">
+                <div className="infoTitle">Phone</div>
+                <div className="infoText">{phone}</div>
               </div>
-              <div style={styles.infoCard}>
-                <div style={styles.infoTitle}>Email</div>
-                <div style={styles.infoText}>{email}</div>
+              <div className="infoCard">
+                <div className="infoTitle">Email</div>
+                <div className="infoText">{email}</div>
               </div>
             </div>
           </div>
 
-          <div style={styles.sideCard}>
-            <div style={styles.sideInner}>
-              <div style={styles.kicker}>What you get</div>
-              <ul style={styles.ul}>
-                <li style={styles.li}>
-                  <span style={styles.bulletA} /> Sourcing & supplier
-                  coordination with clear timelines
+          <div className="sideCard">
+            <div className="sideInner">
+              <div className="kicker">What you get</div>
+              <ul className="ul">
+                <li>
+                  <span className="b a" /> Sourcing & supplier coordination with clear timelines
                 </li>
-                <li style={styles.li}>
-                  <span style={styles.bulletB} /> Negotiation support and
-                  documentation-ready terms
+                <li>
+                  <span className="b b2" /> Negotiation support and documentation-ready terms
                 </li>
-                <li style={styles.li}>
-                  <span style={styles.bulletC} /> Logistics-first planning to
-                  reduce delays & surprises
+                <li>
+                  <span className="b c" /> Logistics-first planning to reduce delays & surprises
                 </li>
               </ul>
 
-              <div style={styles.badges}>
-                <div style={styles.badge}>
-                  <div style={styles.badgeTop}>Fast</div>
-                  <div style={styles.badgeSub}>Response</div>
+              <div className="badgeGrid">
+                <div className="badge">
+                  <div className="badgeTop">Fast</div>
+                  <div className="badgeSub">Response</div>
                 </div>
-                <div style={styles.badge}>
-                  <div style={styles.badgeTop}>Clear</div>
-                  <div style={styles.badgeSub}>Updates</div>
+                <div className="badge">
+                  <div className="badgeTop">Clear</div>
+                  <div className="badgeSub">Updates</div>
                 </div>
-                <div style={styles.badge}>
-                  <div style={styles.badgeTop}>Trusted</div>
-                  <div style={styles.badgeSub}>Execution</div>
+                <div className="badge">
+                  <div className="badgeTop">Trusted</div>
+                  <div className="badgeSub">Execution</div>
                 </div>
               </div>
             </div>
 
-            <div style={styles.note}>
-              Note: placeholders (phone/email) can be replaced anytime. Location
-              shown as “Miami, FL” only.
+            <div className="note">
+              Note: placeholders (phone/email) can be replaced anytime. Location shown as “Miami, FL” only.
             </div>
           </div>
         </div>
       </section>
 
-      <section id="services" style={styles.section}>
-        <div style={styles.sectionHead}>
-          <h2 style={styles.h2}>Services</h2>
-          <p style={styles.muted}>
-            A focused set of services designed to keep deals moving and
-            communication clean.
-          </p>
-        </div>
+      <section id="services" className="section">
+        <h2 className="h2">Services</h2>
+        <p className="muted">
+          A focused set of services designed to keep deals moving and communication clean.
+        </p>
 
-        <div style={styles.cards}>
+        <div className="cards">
           {[
-            {
-              title: "Product Sourcing",
-              desc: "Identify suppliers, validate availability, and coordinate procurement.",
-            },
-            {
-              title: "Trade Facilitation",
-              desc: "Support documentation-ready terms, coordination, and timeline alignment.",
-            },
-            {
-              title: "Logistics Support",
-              desc: "Planning-first approach to reduce delays and simplify delivery steps.",
-            },
-          ].map((c) => (
-            <div key={c.title} style={styles.card}>
-              <div style={styles.cardTitle}>{c.title}</div>
-              <div style={styles.cardDesc}>{c.desc}</div>
-              <div style={styles.hr} />
-              <div style={styles.cardFoot}>
-                Get a quote in under 24 hours (typical).
-              </div>
+            ["Product Sourcing", "Identify suppliers, validate availability, and coordinate procurement."],
+            ["Trade Facilitation", "Support documentation-ready terms, coordination, and timeline alignment."],
+            ["Logistics Support", "Planning-first approach to reduce delays and simplify delivery steps."],
+          ].map(([title, desc]) => (
+            <div key={title} className="card">
+              <div className="cardTitle">{title}</div>
+              <div className="cardDesc">{desc}</div>
+              <div className="hr" />
+              <div className="cardFoot">Get a quote in under 24 hours (typical).</div>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="about" style={styles.section}>
-        <div style={styles.panel}>
-          <h2 style={styles.h2}>About</h2>
-          <p style={styles.copy}>
-            UNION KOMES TRADING L.L.C. is based in Miami, Florida. We focus on
-            reliable execution: fast communication, clean terms, and a
-            logistics-first mindset so clients can move confidently and avoid
-            unnecessary friction.
+      <section id="about" className="section">
+        <div className="panel">
+          <h2 className="h2">About</h2>
+          <p className="copy">
+            UNION KOMES TRADING L.L.C. is based in Miami, Florida. We focus on reliable execution:
+            fast communication, clean terms, and a logistics-first mindset so clients can move confidently
+            and avoid unnecessary friction.
           </p>
 
-          <div style={styles.triple}>
+          <div className="triple">
             {[
               ["Speed", "Short response times & quick turnarounds."],
               ["Clarity", "Straight answers, simple next steps."],
               ["Reliability", "Process-driven coordination and updates."],
             ].map(([k, v]) => (
-              <div key={k} style={styles.mini}>
-                <div style={styles.miniTitle}>{k}</div>
-                <div style={styles.miniDesc}>{v}</div>
+              <div key={k} className="mini">
+                <div className="miniTitle">{k}</div>
+                <div className="miniDesc">{v}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="contact" style={styles.section}>
-        <div style={styles.contactGrid}>
-          <div style={styles.panel}>
-            <h2 style={styles.h2}>Contact</h2>
-            <p style={styles.muted}>
-              Send a quick message and we’ll respond with next steps.
-            </p>
+      <section id="contact" className="section">
+        <div className="contactGrid">
+          <div className="panel">
+            <h2 className="h2">Contact</h2>
+            <p className="muted">Send a quick message and we’ll respond with next steps.</p>
 
-            <div style={styles.contactLine}>
-              <span style={styles.label}>Location:</span> Miami, FL
+            <div className="line">
+              <span className="label">Location:</span> Miami, FL
             </div>
-            <div style={styles.contactLine}>
-              <span style={styles.label}>Phone:</span> {phone}
+            <div className="line">
+              <span className="label">Phone:</span> {phone}
             </div>
-            <div style={styles.contactLine}>
-              <span style={styles.label}>Email:</span> {email}
+            <div className="line">
+              <span className="label">Email:</span> {email}
             </div>
 
-            <div style={styles.heroBtns}>
+            <div className="btnRow">
               <a
-                style={styles.primaryBtn}
+                className="btnPrimary"
                 href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
               >
                 Email Us
               </a>
-              <a style={styles.secondaryBtn} href="#services">
+              <a className="btnSecondary" href="#services">
                 See Services
               </a>
             </div>
           </div>
 
-          <form style={styles.panel} onSubmit={(e) => e.preventDefault()}>
-            <div style={styles.formTitle}>Quick inquiry form</div>
-            <div style={styles.formNote}>
-              (Front-end only for now — we can wire it to email later.)
-            </div>
+          <form className="panel" onSubmit={(e) => e.preventDefault()}>
+            <div className="formTitle">Quick inquiry form</div>
+            <div className="formNote">(Front-end only for now — we can wire it to email later.)</div>
 
-            <div style={styles.field}>
-              <div style={styles.fieldLabel}>Name</div>
-              <input style={styles.input} placeholder="Your name" />
-            </div>
+            <label className="field">
+              <span>Name</span>
+              <input className="input" placeholder="Your name" />
+            </label>
 
-            <div style={styles.field}>
-              <div style={styles.fieldLabel}>Email</div>
-              <input
-                style={styles.input}
-                type="email"
-                placeholder="you@email.com"
-              />
-            </div>
+            <label className="field">
+              <span>Email</span>
+              <input className="input" type="email" placeholder="you@email.com" />
+            </label>
 
-            <div style={styles.field}>
-              <div style={styles.fieldLabel}>Message</div>
-              <textarea
-                style={{ ...styles.input, minHeight: 120 }}
-                placeholder="What are you looking to source / trade?"
-              />
-            </div>
+            <label className="field">
+              <span>Message</span>
+              <textarea className="input" style={{ minHeight: 120 }} placeholder="What are you looking to source / trade?" />
+            </label>
 
-            <button style={styles.primaryBtn} type="submit">
+            <button className="btnPrimary" type="submit">
               Submit (placeholder)
             </button>
           </form>
         </div>
       </section>
 
-      <footer style={styles.footer}>
-        <div style={styles.footerInner}>
-          <div style={styles.footerText}>
+      <footer className="footer">
+        <div className="footerInner">
+          <div className="footerText">
             © {new Date().getFullYear()} UNION KOMES TRADING L.L.C. • Miami, FL
           </div>
-          <div style={styles.footerLinks}>
-            <a style={styles.footerLink} href="#services">
-              Services
-            </a>
-            <a style={styles.footerLink} href="#about">
-              About
-            </a>
-            <a style={styles.footerLink} href="#contact">
-              Contact
-            </a>
+          <div className="footerLinks">
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
           </div>
         </div>
       </footer>
 
-      {/* Responsive tweaks */}
-      <style>{responsiveCss}</style>
+      {/* CSS */}
+      <style>{css}</style>
     </main>
   );
 }
 
-const responsiveCss = `
+const css = `
+  .wrap { min-height: 100vh; position: relative; }
+  .bg {
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(ellipse at top, rgba(99,102,241,0.22), transparent 55%),
+      radial-gradient(ellipse at bottom, rgba(16,185,129,0.18), transparent 55%),
+      linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.95));
+  }
+
+  .header {
+    max-width: 1100px; margin: 0 auto; padding: 24px 20px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 40px; height: 40px; border-radius: 16px;
+    display: grid; place-items: center;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    font-weight: 900; font-size: 12px; letter-spacing: .5px;
+  }
+  .brandName { font-size: 13px; font-weight: 900; letter-spacing: .4px; }
+  .brandSub { font-size: 12px; color: rgba(244,244,245,0.65); }
+
+  .nav { display: none; gap: 18px; align-items: center; font-size: 13px; color: rgba(244,244,245,0.75); }
+  .nav a:hover { color: #fff; }
+  .cta {
+    padding: 10px 14px; border-radius: 14px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+  }
+
+  .hero { max-width: 1100px; margin: 0 auto; padding: 24px 20px 48px; }
+  .heroGrid { display: grid; gap: 18px; grid-template-columns: 1fr; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    font-size: 12px; color: rgba(244,244,245,0.9);
+  }
+  .dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(52,211,153,1); }
+
+  .h1 { margin: 14px 0 0; font-size: 44px; line-height: 1.05; letter-spacing: -0.8px; }
+  .accent { color: rgba(165,180,252,0.95); }
+  .lead { margin-top: 14px; max-width: 560px; font-size: 16px; color: rgba(244,244,245,0.78); }
+
+  .btnRow { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .btnPrimary {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 12px 16px; border-radius: 16px;
+    background: #fff; color: #09090b;
+    font-weight: 900; font-size: 13px; border: none; cursor: pointer;
+  }
+  .btnSecondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 12px 16px; border-radius: 16px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    color: #fff; font-weight: 900; font-size: 13px;
+  }
+
+  .infoGrid { margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .infoCard {
+    border-radius: 18px; padding: 14px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  }
+  .infoTitle { font-size: 12px; font-weight: 900; }
+  .infoText { margin-top: 4px; font-size: 13px; color: rgba(244,244,245,0.78); }
+
+  .sideCard {
+    border-radius: 26px; padding: 16px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  }
+  .sideInner {
+    border-radius: 20px; padding: 18px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.22), rgba(16,185,129,0.10));
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+  .kicker { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 900; }
+  .ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .ul li { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: rgba(244,244,245,0.85); line-height: 1.4; }
+  .b { width: 8px; height: 8px; border-radius: 999px; margin-top: 6px; }
+  .a { background: rgba(165,180,252,0.95); }
+  .b2 { background: rgba(110,231,183,0.95); }
+  .c { background: rgba(244,244,245,0.9); }
+
+  .badgeGrid { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .badge {
+    border-radius: 18px; padding: 12px; text-align: center;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  }
+  .badgeTop { font-weight: 900; }
+  .badgeSub { font-size: 11px; color: rgba(244,244,245,0.7); }
+
+  .note { margin-top: 10px; font-size: 11px; color: rgba(244,244,245,0.55); }
+
+  .section { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+  .h2 { margin: 0; font-size: 26px; letter-spacing: -0.4px; }
+  .muted { margin: 10px 0 0; font-size: 13px; color: rgba(244,244,245,0.62); line-height: 1.5; }
+
+  .cards { margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .card {
+    border-radius: 26px; padding: 18px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  }
+  .cardTitle { font-size: 16px; font-weight: 900; }
+  .cardDesc { margin-top: 8px; font-size: 13px; color: rgba(244,244,245,0.78); line-height: 1.6; }
+  .hr { margin-top: 14px; height: 1px; background: rgba(255,255,255,0.10); }
+  .cardFoot { margin-top: 12px; font-size: 11px; color: rgba(244,244,245,0.6); }
+
+  .panel {
+    border-radius: 26px; padding: 18px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  }
+  .copy { margin: 12px 0 0; font-size: 13px; color: rgba(244,244,245,0.78); line-height: 1.7; }
+
+  .triple { margin-top: 16px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .mini {
+    border-radius: 18px; padding: 14px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10);
+  }
+  .miniTitle { font-weight: 900; font-size: 13px; }
+  .miniDesc { margin-top: 6px; font-size: 12px; color: rgba(244,244,245,0.72); line-height: 1.6; }
+
+  .contactGrid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 18px; }
+  .line { margin-top: 12px; font-size: 13px; color: rgba(244,244,245,0.75); }
+  .label { color: rgba(244,244,245,0.55); margin-right: 6px; }
+
+  .formTitle { font-weight: 900; font-size: 13px; }
+  .formNote { margin-top: 8px; font-size: 11px; color: rgba(244,244,245,0.55); }
+  .field { display: grid; gap: 8px; margin-top: 14px; font-size: 12px; color: rgba(244,244,245,0.75); }
+  .input {
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(9,9,11,0.55);
+    padding: 12px 14px;
+    color: #fff;
+    outline: none;
+    font-size: 13px;
+  }
+
+  .footer { max-width: 1100px; margin: 0 auto; padding: 20px 20px 40px; }
+  .footerInner {
+    padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10);
+    display: flex; gap: 12px; flex-wrap: wrap;
+    justify-content: space-between; align-items: center;
+  }
+  .footerText { font-size: 11px; color: rgba(244,244,245,0.55); }
+  .footerLinks { display: flex; gap: 14px; font-size: 11px; color: rgba(244,244,245,0.6); }
+  .footerLinks a:hover { color: #fff; }
+
   @media (min-width: 860px) {
-    .nav-desktop { display: flex !important; }
-    .hero-grid { grid-template-columns: 1.15fr 0.85fr !important; }
-    .info-grid { grid-template-columns: 1fr 1fr !important; }
-    .cards-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    .triple-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    .contact-grid { grid-template-columns: 1fr 1fr !important; }
+    .nav { display: flex; }
+    .heroGrid { grid-template-columns: 1.15fr 0.85fr; }
+    .infoGrid { grid-template-columns: 1fr 1fr; }
+    .cards { grid-template-columns: repeat(3, 1fr); }
+    .triple { grid-template-columns: repeat(3, 1fr); }
+    .contactGrid { grid-template-columns: 1fr 1fr; }
   }
 `;
-
-const styles: Record<string, CSSProperties> = {
-  main: { minHeight: "100vh", position: "relative" },
-  bg: {
-    position: "fixed",
-    inset: 0,
-    zIndex: -1,
-    background:
-      "radial-gradient(ellipse at top, rgba(99,102,241,0.22), transparent 55%), radial-gradient(ellipse at bottom, rgba(16,185,129,0.18), transparent 55%), linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.95))",
-  },
-
-  header: {
-    maxWidth: 1100,
-    margin: "0 auto",
-    padding: "24px 20px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 16,
-  },
-  brand: { display: "flex", alignItems: "center", gap: 12 },
-  logo: {
-    width: 40,
-    height: 40,
-    borderRadius: 16,
-    display: "grid",
-    placeItems: "center",
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    fontWeight: 800,
-    letterSpacing: 0.5,
-    fontSize: 12,
-  },
-  brandName: { fontSize: 13, fontWeight: 800, letterSpacing: 0.4 },
-  brandSub: { fontSize: 12, color: "rgba(244,244,245,0.65)" },
-
-  nav: {
-    display: "none",
-    gap: 18,
-    alignItems: "center",
-  },
-  navLink: {
-    color: "rgba(244,244,245,0.75)",
-    textDecoration: "none",
-    fontSize: 13,
-  },
-  navCta: {
-    textDecoration: "none",
-    fontSize: 13,
-    color: "#fff",
-    padding: "10px 14px",
-    borderRadius: 14,
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.12)",
-  },
-
-  hero: { maxWidth: 1100, margin: "0 auto", padding: "24px 20px 48px" },
-  heroGrid: { display: "grid", gap: 18, gridTemplateColumns: "1fr" },
-
-  pill: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 10,
-    padding: "6px 10px",
-    borderRadius: 999,
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    fontSize: 12,
-    color: "rgba(244,244,245,0.9)",
-  },
-  pillDot: { width: 8, height: 8, borderRadius: 999, background: "rgba(52,211,153,1)" },
-
-  h1: { marginTop: 14, marginBottom: 0, fontSize: 44, lineHeight: 1.05, letterSpacing: -0.8 },
-  h1Accent: { color: "rgba(165,180,252,0.95)" },
-  lead: { marginTop: 14, maxWidth: 560, fontSize: 16, color: "rgba(244,244,245,0.78)" },
-
-  heroBtns: { marginTop: 18, display: "flex", gap: 10, flexWrap: "wrap" },
-  primaryBtn: {
-    appearance: "none",
-    border: "none",
-    cursor: "pointer",
-    textDecoration: "none",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "12px 16px",
-    borderRadius: 16,
-    background: "#fff",
-    color: "#09090b",
-    fontWeight: 800,
-    fontSize: 13,
-  },
-  secondaryBtn: {
-    textDecoration: "none",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "12px 16px",
-    borderRadius: 16,
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    color: "#fff",
-    fontWeight: 800,
-    fontSize: 13,
-  },
-
-  infoGrid: { marginTop: 18, display: "grid", gridTemplateColumns: "1fr", gap: 10 },
-  infoCard: {
-    borderRadius: 18,
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    padding: 14,
-  },
-  infoTitle: { fontSize: 12, fontWeight: 800, color: "#fff" },
-  infoText: { marginTop: 4, fontSize: 13, color: "rgba(244,244,245,0.78)" },
-
-  sideCard: {
-    borderRadius: 26,
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    padding: 16,
-  },
-  sideInner: {
-    borderRadius: 20,
-    padding: 18,
-    background: "linear-gradient(135deg, rgba(99,102,241,0.22), rgba(16,185,129,0.10))",
-    border: "1px solid rgba(255,255,255,0.10)",
-  },
-  kicker: { fontSize: 11, letterSpacing: 1.2, textTransform: "uppercase", color: "rgba(244,244,245,0.9)", fontWeight: 900 },
-  ul: { margin: "14px 0 0", padding: 0, listStyle: "none", display: "grid", gap: 10 },
-  li: { display: "flex", gap: 10, alignItems: "flex-start", fontSize: 13, color: "rgba(244,244,245,0.85)", lineHeight: 1.4 },
-  bulletA: { width: 8, height: 8, marginTop: 6, borderRadius: 999, background: "rgba(165,180,252,0.95)" },
-  bulletB: { width: 8, height: 8, marginTop: 6, borderRadius: 999, background: "rgba(110,231,183,0.95)" },
-  bulletC: { width: 8, height: 8, marginTop: 6, borderRadius: 999, background: "rgba(244,244,245,0.9)" },
-
-  badges: { marginTop: 16, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 },
-  badge: {
-    borderRadius: 18,
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    padding: 12,
-    textAlign: "center",
-  },
-  badgeTop: { fontSize: 13, fontWeight: 900 },
-  badgeSub: { fontSize: 11, color: "rgba(244,244,245,0.7)" },
-
-  note: { marginTop: 10, fontSize: 11, color: "rgba(244,244,245,0.55)" },
-
-  section: { maxWidth: 1100, margin: "0 auto", padding: "40px 20px" },
-  sectionHead: { maxWidth: 680 },
-  h2: { margin: 0, fontSize: 26, letterSpacing: -0.4 },
-  muted: { marginTop: 10, marginBottom: 0, fontSize: 13, color: "rgba(244,244,245,0.62)", lineHeight: 1.5 },
-
-  cards: { marginTop: 18, display: "grid", gridTemplateColumns: "1fr", gap: 12 },
-  card: {
-    borderRadius: 26,
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    padding: 18,
-  },
-  cardTitle: { fontSize: 16, fontWeight: 900 },
-  cardDesc: { marginTop: 8, fontSize: 13, color: "rgba(244,244,245,0.78)", lineHeight: 1.6 },
-  hr: { marginTop: 14, height: 1, background: "rgba(255,255,255,0.10)" },
-  cardFoot: { marginTop: 12, fontSize: 11, color: "rgba(244,244,245,0.6)" },
-
-  panel: {
-    borderRadius: 26,
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    padding: 18,
-  },
-  copy: { marginTop: 12, marginBottom: 0, fontSize: 13, color: "rgba(244,244,245,0.78)", lineHeight: 1.7 },
-
-  triple: { marginTop: 16, display: "grid", gridTemplateColumns: "1fr", gap: 12 },
-  mini: {
-    borderRadius: 18,
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.10)",
-    padding: 14,
-  },
-  miniTitle: { fontSize: 13, fontWeight: 900 },
-  miniDesc: { marginTop: 6, fontSize: 12, color: "rgba(244,244,245,0.72)", lineHeight: 1.6 },
-
-  contactGrid: { display: "grid", gridTemplateColumns: "1fr", gap: 12 },
-  contactLine: { marginTop: 12, fontSize: 13, color: "rgba(244,244,245,0.75)" },
-  label: { color: "rgba(244,244,245,0.55)", marginRight: 6 },
-
-  formTitle: { fontSize: 13, fontWeight: 900, color: "#fff" },
-  formNote: { marginTop: 8, fontSize: 11, color: "rgba(244,244,245,0.55)" },
-  field: { marginTop: 14 },
-  fieldLabel: { fontSize: 12, color: "rgba(244,244,245,0.75)", marginBottom: 8 },
-  input: {
-    width: "100%",
-    borderRadius: 16,
-    border: "1px solid rgba(255,255,255,0.12)",
-    background: "rgba(9,9,11,0.55)",
-    padding: "12px 14px",
-    color: "#fff",
-    outline: "none",
-    fontSize: 13,
-  },
-
-  footer: { maxWidth: 1100, margin: "0 auto", padding: "20px 20px 40px" },
-  footerInner: {
-    paddingTop: 16,
-    borderTop: "1px solid rgba(255,255,255,0.10)",
-    display: "flex",
-    gap: 12,
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  footerText: { fontSize: 11, color: "rgba(244,244,245,0.55)" },
-  footerLinks: { display: "flex", gap: 14 },
-  footerLink: { fontSize: 11, color: "rgba(244,244,245,0.6)", textDecoration: "none" },
-};
-
-// NOTE: The responsive CSS uses class names; apply them via inline style trick:
-(styles.nav as any).className = "nav-desktop";
-(styles.heroGrid as any).className = "hero-grid";
-(styles.infoGrid as any).className = "info-grid";
-(styles.cards as any).className = "cards-grid";
-(styles.triple as any).className = "triple-grid";
-(styles.contactGrid as any).className = "contact-grid";
