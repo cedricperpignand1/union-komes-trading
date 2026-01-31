@@ -1,17 +1,18 @@
 "use client";
 
-const phone = "(305) 555-0147"; // placeholder
-const email = "sales@unionkomestrading.com"; // placeholder
+const phoneDisplay = "786-599-8099";
+const phoneRaw = "7865998099";
+const email = "cedricperpignand@gmail.com";
 
 export default function Home() {
   return (
     <main className="wrap">
-      <div className="bg" />
-
       <header className="header">
         <div className="brand">
-          <div className="logo">UK</div>
-          <div>
+          <div className="logo" aria-hidden>
+            UK
+          </div>
+          <div className="brandText">
             <div className="brandName">UNION KOMES TRADING L.L.C.</div>
             <div className="brandSub">Miami, FL</div>
           </div>
@@ -21,93 +22,102 @@ export default function Home() {
           <a href="#services">Services</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
-          <a className="cta" href="#contact">
+          <a className="navCta" href="#contact">
             Get a Quote
           </a>
         </nav>
       </header>
 
       <section className="hero">
-        <div className="heroGrid">
-          <div>
-            <div className="pill">
-              <span className="dot" />
-              Reliable sourcing • Fast communication • Clear terms
-            </div>
-
-            <h1 className="h1">
-              Modern trading & sourcing, <span className="accent">built for speed</span>.
-            </h1>
-
-            <p className="lead">
-              UNION KOMES TRADING L.L.C. helps clients move products efficiently
-              with dependable sourcing, transparent updates, and logistics-first execution.
-            </p>
-
-            <div className="btnRow">
-              <a className="btnPrimary" href="#contact">
-                Request a Quote
-              </a>
-              <a className="btnSecondary" href="#services">
-                View Services
-              </a>
-            </div>
-
-            <div className="infoGrid">
-              <div className="infoCard">
-                <div className="infoTitle">Phone</div>
-                <div className="infoText">{phone}</div>
-              </div>
-              <div className="infoCard">
-                <div className="infoTitle">Email</div>
-                <div className="infoText">{email}</div>
-              </div>
-            </div>
+        <div className="heroInner">
+          <div className="eyebrow">
+            <span className="spark" aria-hidden />
+            Reliable sourcing • Fast communication • Clear terms
           </div>
 
-          <div className="sideCard">
-            <div className="sideInner">
-              <div className="kicker">What you get</div>
-              <ul className="ul">
-                <li>
-                  <span className="b a" /> Sourcing & supplier coordination with clear timelines
-                </li>
-                <li>
-                  <span className="b b2" /> Negotiation support and documentation-ready terms
-                </li>
-                <li>
-                  <span className="b c" /> Logistics-first planning to reduce delays & surprises
-                </li>
-              </ul>
+          <h1 className="h1">
+            Modern trading & sourcing,
+            <span className="accent"> built for speed</span>.
+          </h1>
 
-              <div className="badgeGrid">
-                <div className="badge">
-                  <div className="badgeTop">Fast</div>
-                  <div className="badgeSub">Response</div>
-                </div>
-                <div className="badge">
-                  <div className="badgeTop">Clear</div>
-                  <div className="badgeSub">Updates</div>
-                </div>
-                <div className="badge">
-                  <div className="badgeTop">Trusted</div>
-                  <div className="badgeSub">Execution</div>
-                </div>
-              </div>
+          <p className="lead">
+            UNION KOMES TRADING L.L.C. helps clients move products efficiently with dependable sourcing,
+            transparent updates, and logistics-first execution.
+          </p>
+
+          <div className="heroActions">
+            <a className="btnPrimary" href="#contact">
+              Request a Quote
+            </a>
+            <a className="btnGhost" href="#services">
+              View Services
+            </a>
+          </div>
+
+          <div className="heroMeta">
+            <a className="metaItem" href={`tel:+1${phoneRaw}`}>
+              <div className="metaLabel">Phone</div>
+              <div className="metaValue">{phoneDisplay}</div>
+            </a>
+            <a
+              className="metaItem"
+              href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
+            >
+              <div className="metaLabel">Email</div>
+              <div className="metaValue">{email}</div>
+            </a>
+            <div className="metaItem">
+              <div className="metaLabel">Location</div>
+              <div className="metaValue">Miami, FL</div>
             </div>
+          </div>
+        </div>
 
-            <div className="note">
-              Note: placeholders (phone/email) can be replaced anytime. Location shown as “Miami, FL” only.
+        <div className="heroCard" aria-label="What you get">
+          <div className="heroCardTop">
+            <div className="heroCardTitle">What you get</div>
+            <div className="heroCardSub">Simple, fast, and documentation-ready.</div>
+          </div>
+
+          <ul className="list">
+            <li>
+              <span className="check" aria-hidden />
+              Sourcing & supplier coordination with clear timelines
+            </li>
+            <li>
+              <span className="check" aria-hidden />
+              Negotiation support and documentation-ready terms
+            </li>
+            <li>
+              <span className="check" aria-hidden />
+              Logistics-first planning to reduce delays & surprises
+            </li>
+          </ul>
+
+          <div className="miniStats">
+            <div className="stat">
+              <div className="statTop">Fast</div>
+              <div className="statSub">Response</div>
+            </div>
+            <div className="stat">
+              <div className="statTop">Clear</div>
+              <div className="statSub">Updates</div>
+            </div>
+            <div className="stat">
+              <div className="statTop">Trusted</div>
+              <div className="statSub">Execution</div>
             </div>
           </div>
         </div>
       </section>
 
       <section id="services" className="section">
-        <h2 className="h2">Services</h2>
-        <p className="muted">
-          A focused set of services designed to keep deals moving and communication clean.
-        </p>
+        <div className="sectionHead">
+          <h2 className="h2">Services</h2>
+          <p className="muted">
+            A focused set of services designed to keep deals moving and communication clean.
+          </p>
+        </div>
 
         <div className="cards">
           {[
@@ -118,8 +128,7 @@ export default function Home() {
             <div key={title} className="card">
               <div className="cardTitle">{title}</div>
               <div className="cardDesc">{desc}</div>
-              <div className="hr" />
-              <div className="cardFoot">Get a quote in under 24 hours (typical).</div>
+              <div className="cardFoot">Typical quote response: under 24 hours.</div>
             </div>
           ))}
         </div>
@@ -127,22 +136,27 @@ export default function Home() {
 
       <section id="about" className="section">
         <div className="panel">
-          <h2 className="h2">About</h2>
+          <div className="sectionHead tight">
+            <h2 className="h2">About</h2>
+            <p className="muted">
+              Based in Miami, Florida. Built around speed, clarity, and reliable execution.
+            </p>
+          </div>
+
           <p className="copy">
-            UNION KOMES TRADING L.L.C. is based in Miami, Florida. We focus on reliable execution:
-            fast communication, clean terms, and a logistics-first mindset so clients can move confidently
-            and avoid unnecessary friction.
+            UNION KOMES TRADING L.L.C. focuses on dependable coordination — fast communication, clean terms,
+            and a logistics-first mindset so clients can move confidently and avoid unnecessary friction.
           </p>
 
-          <div className="triple">
+          <div className="features">
             {[
               ["Speed", "Short response times & quick turnarounds."],
               ["Clarity", "Straight answers, simple next steps."],
               ["Reliability", "Process-driven coordination and updates."],
             ].map(([k, v]) => (
-              <div key={k} className="mini">
-                <div className="miniTitle">{k}</div>
-                <div className="miniDesc">{v}</div>
+              <div key={k} className="feature">
+                <div className="featureTitle">{k}</div>
+                <div className="featureDesc">{v}</div>
               </div>
             ))}
           </div>
@@ -150,30 +164,44 @@ export default function Home() {
       </section>
 
       <section id="contact" className="section">
-        <div className="contactGrid">
+        <div className="contact">
           <div className="panel">
-            <h2 className="h2">Contact</h2>
-            <p className="muted">Send a quick message and we’ll respond with next steps.</p>
-
-            <div className="line">
-              <span className="label">Location:</span> Miami, FL
-            </div>
-            <div className="line">
-              <span className="label">Phone:</span> {phone}
-            </div>
-            <div className="line">
-              <span className="label">Email:</span> {email}
+            <div className="sectionHead tight">
+              <h2 className="h2">Contact</h2>
+              <p className="muted">Send a quick message and we’ll respond with next steps.</p>
             </div>
 
-            <div className="btnRow">
+            <div className="contactLines">
+              <div className="line">
+                <span className="label">Location</span>
+                <span className="value">Miami, FL</span>
+              </div>
+              <div className="line">
+                <span className="label">Phone</span>
+                <a className="valueLink" href={`tel:+1${phoneRaw}`}>
+                  {phoneDisplay}
+                </a>
+              </div>
+              <div className="line">
+                <span className="label">Email</span>
+                <a
+                  className="valueLink"
+                  href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
+                >
+                  {email}
+                </a>
+              </div>
+            </div>
+
+            <div className="heroActions">
               <a
                 className="btnPrimary"
                 href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
               >
                 Email Us
               </a>
-              <a className="btnSecondary" href="#services">
-                See Services
+              <a className="btnGhost" href={`tel:+1${phoneRaw}`}>
+                Call Now
               </a>
             </div>
           </div>
@@ -182,11 +210,11 @@ export default function Home() {
             className="panel"
             onSubmit={(e) => {
               e.preventDefault();
-              alert("Thanks! This form is a placeholder for now.");
+              alert("Thanks! This form is front-end only right now.");
             }}
           >
-            <div className="formTitle">Quick inquiry form</div>
-            <div className="formNote">(Front-end only for now — we can wire it to email later.)</div>
+            <div className="formTitle">Quick inquiry</div>
+            <div className="formNote">Front-end only for now — we can wire this to email later.</div>
 
             <label className="field">
               <span>Name</span>
@@ -233,163 +261,467 @@ export default function Home() {
 }
 
 const css = `
-  .wrap { min-height: 100vh; position: relative; }
-  .bg {
-    position: fixed; inset: 0; z-index: -1;
+  :root{
+    --bg: #ffffff;
+    --text: #0b1220;
+    --muted: rgba(11,18,32,.64);
+    --line: rgba(15,23,42,.10);
+    --card: rgba(255,255,255,.72);
+    --shadow: 0 18px 50px rgba(2,6,23,.08);
+    --shadow2: 0 10px 30px rgba(2,6,23,.06);
+    --radius: 22px;
+    --accent: #4f46e5;
+    --accent2: #10b981;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { padding: 0; margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  .wrap{
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* soft, clean background */
+  .wrap:before{
+    content:"";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     background:
-      radial-gradient(ellipse at top, rgba(99,102,241,0.22), transparent 55%),
-      radial-gradient(ellipse at bottom, rgba(16,185,129,0.18), transparent 55%),
-      linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.95));
+      radial-gradient(1200px 700px at 15% 10%, rgba(79,70,229,.10), transparent 55%),
+      radial-gradient(900px 600px at 85% 25%, rgba(16,185,129,.10), transparent 55%),
+      radial-gradient(900px 700px at 40% 90%, rgba(79,70,229,.06), transparent 55%),
+      linear-gradient(#fff, #fff);
   }
 
-  .header {
-    max-width: 1100px; margin: 0 auto; padding: 24px 20px;
-    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  .header{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
   }
-  .brand { display: flex; align-items: center; gap: 12px; }
-  .logo {
-    width: 40px; height: 40px; border-radius: 16px;
-    display: grid; place-items: center;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-    font-weight: 900; font-size: 12px; letter-spacing: .5px;
-  }
-  .brandName { font-size: 13px; font-weight: 900; letter-spacing: .4px; }
-  .brandSub { font-size: 12px; color: rgba(244,244,245,0.65); }
 
-  .nav { display: none; gap: 18px; align-items: center; font-size: 13px; color: rgba(244,244,245,0.75); }
-  .nav a:hover { color: #fff; }
-  .cta {
-    padding: 10px 14px; border-radius: 14px;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  .brand{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .logo{
+    width: 42px;
+    height: 42px;
+    border-radius: 16px;
+    display:grid;
+    place-items:center;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow2);
+    font-weight: 900;
+    letter-spacing: .4px;
+    font-size: 12px;
+  }
+
+  .brandText{ min-width: 0; }
+  .brandName{
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .45px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .brandSub{
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .nav{
+    display: none;
+    align-items: center;
+    gap: 18px;
+    font-size: 13px;
+    color: rgba(11,18,32,.72);
+  }
+
+  .nav a{ text-decoration: none; }
+  .nav a:hover{ text-decoration: none; color: rgba(11,18,32,.95); }
+
+  .navCta{
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(79,70,229,.10);
+    border: 1px solid rgba(79,70,229,.18);
+    color: rgba(11,18,32,.95);
+    font-weight: 900;
+  }
+
+  .hero{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 20px 34px;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .heroInner{
+    padding: 12px 2px 4px;
+  }
+
+  .eyebrow{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.75);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow2);
+    font-size: 12px;
+    color: rgba(11,18,32,.75);
+  }
+
+  .spark{
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+  }
+
+  .h1{
+    margin: 16px 0 0;
+    font-size: 46px;
+    line-height: 1.05;
+    letter-spacing: -1px;
+  }
+  .accent{ color: var(--accent); }
+
+  .lead{
+    margin-top: 14px;
+    max-width: 62ch;
+    font-size: 16px;
+    color: rgba(11,18,32,.72);
+    line-height: 1.7;
+  }
+
+  .heroActions{
+    margin-top: 18px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btnPrimary{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: var(--text);
     color: #fff;
+    font-weight: 900;
+    font-size: 13px;
+    border: 1px solid rgba(2,6,23,.10);
+    box-shadow: var(--shadow2);
+    cursor:pointer;
+    text-decoration: none !important;
   }
 
-  .hero { max-width: 1100px; margin: 0 auto; padding: 24px 20px 48px; }
-  .heroGrid { display: grid; gap: 18px; grid-template-columns: 1fr; }
-
-  .pill {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 6px 10px; border-radius: 999px;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-    font-size: 12px; color: rgba(244,244,245,0.9);
-  }
-  .dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(52,211,153,1); }
-
-  .h1 { margin: 14px 0 0; font-size: 44px; line-height: 1.05; letter-spacing: -0.8px; }
-  .accent { color: rgba(165,180,252,0.95); }
-  .lead { margin-top: 14px; max-width: 560px; font-size: 16px; color: rgba(244,244,245,0.78); }
-
-  .btnRow { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
-  .btnPrimary {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 12px 16px; border-radius: 16px;
-    background: #fff; color: #09090b;
-    font-weight: 900; font-size: 13px; border: none; cursor: pointer;
-  }
-  .btnSecondary {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 12px 16px; border-radius: 16px;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-    color: #fff; font-weight: 900; font-size: 13px;
+  .btnGhost{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.80);
+    color: rgba(11,18,32,.92);
+    font-weight: 900;
+    font-size: 13px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow2);
+    text-decoration: none !important;
   }
 
-  .infoGrid { margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 10px; }
-  .infoCard {
-    border-radius: 18px; padding: 14px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  .heroMeta{
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
-  .infoTitle { font-size: 12px; font-weight: 900; }
-  .infoText { margin-top: 4px; font-size: 13px; color: rgba(244,244,245,0.78); }
 
-  .sideCard {
-    border-radius: 26px; padding: 16px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  .metaItem{
+    border-radius: var(--radius);
+    padding: 14px 14px;
+    background: rgba(255,255,255,.80);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow2);
+    transition: transform .12s ease, box-shadow .12s ease;
+    text-decoration: none !important;
   }
-  .sideInner {
-    border-radius: 20px; padding: 18px;
-    background: linear-gradient(135deg, rgba(99,102,241,0.22), rgba(16,185,129,0.10));
-    border: 1px solid rgba(255,255,255,0.10);
+  .metaItem:hover{
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
   }
-  .kicker { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 900; }
-  .ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-  .ul li { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: rgba(244,244,245,0.85); line-height: 1.4; }
-  .b { width: 8px; height: 8px; border-radius: 999px; margin-top: 6px; }
-  .a { background: rgba(165,180,252,0.95); }
-  .b2 { background: rgba(110,231,183,0.95); }
-  .c { background: rgba(244,244,245,0.9); }
 
-  .badgeGrid { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .badge {
-    border-radius: 18px; padding: 12px; text-align: center;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  .metaLabel{
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(11,18,32,.62);
   }
-  .badgeTop { font-weight: 900; }
-  .badgeSub { font-size: 11px; color: rgba(244,244,245,0.7); }
-
-  .note { margin-top: 10px; font-size: 11px; color: rgba(244,244,245,0.55); }
-
-  .section { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-  .h2 { margin: 0; font-size: 26px; letter-spacing: -0.4px; }
-  .muted { margin: 10px 0 0; font-size: 13px; color: rgba(244,244,245,0.62); line-height: 1.5; }
-
-  .cards { margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 12px; }
-  .card {
-    border-radius: 26px; padding: 18px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  .metaValue{
+    margin-top: 4px;
+    font-size: 13px;
+    color: rgba(11,18,32,.86);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .cardTitle { font-size: 16px; font-weight: 900; }
-  .cardDesc { margin-top: 8px; font-size: 13px; color: rgba(244,244,245,0.78); line-height: 1.6; }
-  .hr { margin-top: 14px; height: 1px; background: rgba(255,255,255,0.10); }
-  .cardFoot { margin-top: 12px; font-size: 11px; color: rgba(244,244,245,0.6); }
 
-  .panel {
-    border-radius: 26px; padding: 18px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  .heroCard{
+    border-radius: 28px;
+    padding: 18px;
+    background: rgba(255,255,255,.80);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
   }
-  .copy { margin: 12px 0 0; font-size: 13px; color: rgba(244,244,245,0.78); line-height: 1.7; }
 
-  .triple { margin-top: 16px; display: grid; grid-template-columns: 1fr; gap: 12px; }
-  .mini {
-    border-radius: 18px; padding: 14px;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10);
+  .heroCardTop{
+    display:flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
   }
-  .miniTitle { font-weight: 900; font-size: 13px; }
-  .miniDesc { margin-top: 6px; font-size: 12px; color: rgba(244,244,245,0.72); line-height: 1.6; }
+  .heroCardTitle{ font-size: 13px; font-weight: 900; }
+  .heroCardSub{ font-size: 12px; color: rgba(11,18,32,.66); line-height: 1.5; }
 
-  .contactGrid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 18px; }
-  .line { margin-top: 12px; font-size: 13px; color: rgba(244,244,245,0.75); }
-  .label { color: rgba(244,244,245,0.55); margin-right: 6px; }
+  .list{
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+    color: rgba(11,18,32,.78);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .list li{
+    display:flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .check{
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    border-radius: 999px;
+    border: 1px solid rgba(16,185,129,.30);
+    background: rgba(16,185,129,.12);
+    position: relative;
+    flex: 0 0 18px;
+  }
+  .check:after{
+    content:"";
+    position:absolute;
+    left: 5px;
+    top: 3px;
+    width: 6px;
+    height: 10px;
+    border-right: 2px solid rgba(16,185,129,.85);
+    border-bottom: 2px solid rgba(16,185,129,.85);
+    transform: rotate(40deg);
+  }
 
-  .formTitle { font-weight: 900; font-size: 13px; }
-  .formNote { margin-top: 8px; font-size: 11px; color: rgba(244,244,245,0.55); }
-  .field { display: grid; gap: 8px; margin-top: 14px; font-size: 12px; color: rgba(244,244,245,0.75); }
-  .input {
+  .miniStats{
+    margin-top: 16px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .stat{
+    border-radius: 18px;
+    padding: 12px;
+    text-align:center;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.70);
+  }
+  .statTop{ font-weight: 900; font-size: 13px; }
+  .statSub{ margin-top: 2px; font-size: 11px; color: rgba(11,18,32,.62); }
+
+  .section{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 44px 20px;
+  }
+
+  .sectionHead{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sectionHead.tight{ gap: 8px; }
+
+  .h2{
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: -0.5px;
+  }
+  .muted{
+    margin: 0;
+    font-size: 13px;
+    color: rgba(11,18,32,.64);
+    line-height: 1.6;
+    max-width: 72ch;
+  }
+
+  .cards{
+    margin-top: 18px;
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card{
+    border-radius: 26px;
+    padding: 18px;
+    background: rgba(255,255,255,.82);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow2);
+  }
+  .cardTitle{ font-size: 15px; font-weight: 900; }
+  .cardDesc{ margin-top: 8px; font-size: 13px; color: rgba(11,18,32,.72); line-height: 1.7; }
+  .cardFoot{ margin-top: 12px; font-size: 12px; color: rgba(11,18,32,.56); }
+
+  .panel{
+    border-radius: 26px;
+    padding: 18px;
+    background: rgba(255,255,255,.82);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow2);
+  }
+  .copy{
+    margin: 14px 0 0;
+    font-size: 13px;
+    color: rgba(11,18,32,.72);
+    line-height: 1.85;
+    max-width: 78ch;
+  }
+
+  .features{
+    margin-top: 16px;
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .feature{
+    border-radius: 20px;
+    padding: 14px;
+    background: rgba(255,255,255,.70);
+    border: 1px solid var(--line);
+  }
+  .featureTitle{ font-weight: 900; font-size: 13px; }
+  .featureDesc{ margin-top: 6px; font-size: 12px; color: rgba(11,18,32,.62); line-height: 1.7; }
+
+  .contact{
+    margin-top: 18px;
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .contactLines{
+    margin-top: 14px;
+    display:grid;
+    gap: 10px;
+  }
+
+  .line{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.70);
+  }
+  .label{ font-size: 12px; color: rgba(11,18,32,.58); font-weight: 800; }
+  .value{ font-size: 13px; color: rgba(11,18,32,.80); }
+  .valueLink{
+    font-size: 13px;
+    color: rgba(11,18,32,.88);
+    font-weight: 900;
+    text-decoration: none;
+  }
+  .valueLink:hover{ text-decoration: underline; text-underline-offset: 4px; }
+
+  .formTitle{ font-weight: 900; font-size: 13px; }
+  .formNote{ margin-top: 8px; font-size: 11px; color: rgba(11,18,32,.55); }
+
+  .field{
+    display:grid;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: rgba(11,18,32,.72);
+  }
+
+  .input{
     width: 100%;
     border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(9,9,11,0.55);
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.90);
     padding: 12px 14px;
-    color: #fff;
+    color: rgba(11,18,32,.92);
     outline: none;
     font-size: 13px;
+    box-shadow: inset 0 1px 0 rgba(2,6,23,.04);
+  }
+  .input:focus{
+    border-color: rgba(79,70,229,.35);
+    box-shadow: 0 0 0 4px rgba(79,70,229,.10);
   }
 
-  .footer { max-width: 1100px; margin: 0 auto; padding: 20px 20px 40px; }
-  .footerInner {
-    padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10);
-    display: flex; gap: 12px; flex-wrap: wrap;
-    justify-content: space-between; align-items: center;
+  .footer{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 18px 20px 46px;
   }
-  .footerText { font-size: 11px; color: rgba(244,244,245,0.55); }
-  .footerLinks { display: flex; gap: 14px; font-size: 11px; color: rgba(244,244,245,0.6); }
-  .footerLinks a:hover { color: #fff; }
+  .footerInner{
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display:flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footerText{ font-size: 11px; color: rgba(11,18,32,.55); }
+  .footerLinks{
+    display:flex;
+    gap: 14px;
+    font-size: 11px;
+    color: rgba(11,18,32,.60);
+  }
+  .footerLinks a{ text-decoration: none; }
+  .footerLinks a:hover{ text-decoration: underline; text-underline-offset: 4px; }
 
-  @media (min-width: 860px) {
-    .nav { display: flex; }
-    .heroGrid { grid-template-columns: 1.15fr 0.85fr; }
-    .infoGrid { grid-template-columns: 1fr 1fr; }
-    .cards { grid-template-columns: repeat(3, 1fr); }
-    .triple { grid-template-columns: repeat(3, 1fr); }
-    .contactGrid { grid-template-columns: 1fr 1fr; }
+  @media (min-width: 860px){
+    .nav{ display:flex; }
+    .hero{ grid-template-columns: 1.2fr .8fr; align-items: start; gap: 18px; padding-top: 36px; }
+    .heroMeta{ grid-template-columns: repeat(3, 1fr); }
+    .cards{ grid-template-columns: repeat(3, 1fr); }
+    .features{ grid-template-columns: repeat(3, 1fr); }
+    .contact{ grid-template-columns: 1fr 1fr; }
+    .h1{ font-size: 52px; }
   }
 `;
