@@ -4,14 +4,15 @@ const phoneDisplay = "786-599-8099";
 const phoneRaw = "7865998099";
 const email = "cedricperpignand@gmail.com";
 
+// ✅ Put your image in /public and set the path here:
+const HERO_PANEL_IMAGE_SRC = "/panel.jpg"; // e.g. /what-you-get.jpg
+
 export default function Home() {
   return (
     <main className="wrap">
       <header className="header">
         <div className="brand">
-          <div className="logo" aria-hidden>
-            UK
-          </div>
+          {/* ✅ Removed the circled UK logo */}
           <div className="brandText">
             <div className="brandName">UNION KOMES TRADING L.L.C.</div>
             <div className="brandSub">Miami, FL</div>
@@ -59,6 +60,7 @@ export default function Home() {
               <div className="metaLabel">Phone</div>
               <div className="metaValue">{phoneDisplay}</div>
             </a>
+
             <a
               className="metaItem"
               href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
@@ -66,6 +68,7 @@ export default function Home() {
               <div className="metaLabel">Email</div>
               <div className="metaValue">{email}</div>
             </a>
+
             <div className="metaItem">
               <div className="metaLabel">Location</div>
               <div className="metaValue">Miami, FL</div>
@@ -73,41 +76,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="heroCard" aria-label="What you get">
-          <div className="heroCardTop">
-            <div className="heroCardTitle">What you get</div>
-            <div className="heroCardSub">Simple, fast, and documentation-ready.</div>
-          </div>
-
-          <ul className="list">
-            <li>
-              <span className="check" aria-hidden />
-              Sourcing & supplier coordination with clear timelines
-            </li>
-            <li>
-              <span className="check" aria-hidden />
-              Negotiation support and documentation-ready terms
-            </li>
-            <li>
-              <span className="check" aria-hidden />
-              Logistics-first planning to reduce delays & surprises
-            </li>
-          </ul>
-
-          <div className="miniStats">
-            <div className="stat">
-              <div className="statTop">Fast</div>
-              <div className="statSub">Response</div>
-            </div>
-            <div className="stat">
-              <div className="statTop">Clear</div>
-              <div className="statSub">Updates</div>
-            </div>
-            <div className="stat">
-              <div className="statTop">Trusted</div>
-              <div className="statSub">Execution</div>
-            </div>
-          </div>
+        {/* ✅ Replaced the “What you get” panel with an image */}
+        <div className="heroImageWrap" aria-label="Hero panel image">
+          <img
+            className="heroImage"
+            src={HERO_PANEL_IMAGE_SRC}
+            alt="Union Komes Trading"
+            loading="eager"
+          />
         </div>
       </section>
 
@@ -138,9 +114,7 @@ export default function Home() {
         <div className="panel">
           <div className="sectionHead tight">
             <h2 className="h2">About</h2>
-            <p className="muted">
-              Based in Miami, Florida. Built around speed, clarity, and reliable execution.
-            </p>
+            <p className="muted">Based in Miami, Florida. Built around speed, clarity, and execution.</p>
           </div>
 
           <p className="copy">
@@ -266,7 +240,6 @@ const css = `
     --text: #0b1220;
     --muted: rgba(11,18,32,.64);
     --line: rgba(15,23,42,.10);
-    --card: rgba(255,255,255,.72);
     --shadow: 0 18px 50px rgba(2,6,23,.08);
     --shadow2: 0 10px 30px rgba(2,6,23,.06);
     --radius: 22px;
@@ -285,7 +258,6 @@ const css = `
     color: var(--text);
   }
 
-  /* soft, clean background */
   .wrap:before{
     content:"";
     position: fixed;
@@ -315,20 +287,6 @@ const css = `
     min-width: 0;
   }
 
-  .logo{
-    width: 42px;
-    height: 42px;
-    border-radius: 16px;
-    display:grid;
-    place-items:center;
-    background: #fff;
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow2);
-    font-weight: 900;
-    letter-spacing: .4px;
-    font-size: 12px;
-  }
-
   .brandText{ min-width: 0; }
   .brandName{
     font-size: 13px;
@@ -351,7 +309,6 @@ const css = `
     font-size: 13px;
     color: rgba(11,18,32,.72);
   }
-
   .nav a{ text-decoration: none; }
   .nav a:hover{ text-decoration: none; color: rgba(11,18,32,.95); }
 
@@ -486,76 +443,22 @@ const css = `
     white-space: nowrap;
   }
 
-  .heroCard{
+  /* ✅ NEW image panel styles */
+  .heroImageWrap{
     border-radius: 28px;
-    padding: 18px;
-    background: rgba(255,255,255,.80);
+    overflow: hidden;
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
+    background: rgba(255,255,255,.85);
+    min-height: 260px;
   }
-
-  .heroCardTop{
-    display:flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--line);
+  .heroImage{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover; /* change to 'contain' if you don't want any cropping */
+    object-position: center;
   }
-  .heroCardTitle{ font-size: 13px; font-weight: 900; }
-  .heroCardSub{ font-size: 12px; color: rgba(11,18,32,.66); line-height: 1.5; }
-
-  .list{
-    margin: 14px 0 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 10px;
-    color: rgba(11,18,32,.78);
-    font-size: 13px;
-    line-height: 1.55;
-  }
-  .list li{
-    display:flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .check{
-    width: 18px;
-    height: 18px;
-    margin-top: 2px;
-    border-radius: 999px;
-    border: 1px solid rgba(16,185,129,.30);
-    background: rgba(16,185,129,.12);
-    position: relative;
-    flex: 0 0 18px;
-  }
-  .check:after{
-    content:"";
-    position:absolute;
-    left: 5px;
-    top: 3px;
-    width: 6px;
-    height: 10px;
-    border-right: 2px solid rgba(16,185,129,.85);
-    border-bottom: 2px solid rgba(16,185,129,.85);
-    transform: rotate(40deg);
-  }
-
-  .miniStats{
-    margin-top: 16px;
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  .stat{
-    border-radius: 18px;
-    padding: 12px;
-    text-align:center;
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.70);
-  }
-  .statTop{ font-weight: 900; font-size: 13px; }
-  .statSub{ margin-top: 2px; font-size: 11px; color: rgba(11,18,32,.62); }
 
   .section{
     max-width: 1120px;
@@ -608,6 +511,7 @@ const css = `
     border: 1px solid var(--line);
     box-shadow: var(--shadow2);
   }
+
   .copy{
     margin: 14px 0 0;
     font-size: 13px;
@@ -717,11 +621,17 @@ const css = `
 
   @media (min-width: 860px){
     .nav{ display:flex; }
-    .hero{ grid-template-columns: 1.2fr .8fr; align-items: start; gap: 18px; padding-top: 36px; }
+    .hero{
+      grid-template-columns: 1.2fr .8fr;
+      align-items: start;
+      gap: 18px;
+      padding-top: 36px;
+    }
     .heroMeta{ grid-template-columns: repeat(3, 1fr); }
     .cards{ grid-template-columns: repeat(3, 1fr); }
     .features{ grid-template-columns: repeat(3, 1fr); }
     .contact{ grid-template-columns: 1fr 1fr; }
     .h1{ font-size: 52px; }
+    .heroImageWrap{ min-height: 360px; }
   }
 `;
