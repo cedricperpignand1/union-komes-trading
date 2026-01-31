@@ -1,3 +1,5 @@
+"use client";
+
 const phone = "(305) 555-0147"; // placeholder
 const email = "sales@unionkomestrading.com"; // placeholder
 
@@ -176,7 +178,13 @@ export default function Home() {
             </div>
           </div>
 
-          <form className="panel" onSubmit={(e) => e.preventDefault()}>
+          <form
+            className="panel"
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert("Thanks! This form is a placeholder for now.");
+            }}
+          >
             <div className="formTitle">Quick inquiry form</div>
             <div className="formNote">(Front-end only for now — we can wire it to email later.)</div>
 
@@ -192,11 +200,15 @@ export default function Home() {
 
             <label className="field">
               <span>Message</span>
-              <textarea className="input" style={{ minHeight: 120 }} placeholder="What are you looking to source / trade?" />
+              <textarea
+                className="input"
+                style={{ minHeight: 120 }}
+                placeholder="What are you looking to source / trade?"
+              />
             </label>
 
             <button className="btnPrimary" type="submit">
-              Submit (placeholder)
+              Submit
             </button>
           </form>
         </div>
@@ -215,7 +227,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* CSS */}
       <style>{css}</style>
     </main>
   );
