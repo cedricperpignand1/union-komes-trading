@@ -75,7 +75,7 @@ const I18N: Record<
 
     emailLabel: string;
     emailPh: string;
-
+    
     destination: string;
     destinationPh: string;
 
@@ -149,12 +149,12 @@ const I18N: Record<
     h1bAccent: " packed & ready to ship",
     lead:
       "UNION KOMES TRADING L.L.C. supplies used clothing bales from the USA for export buyers, wholesalers, and resellers — with clear terms, quick communication, and dependable sourcing.",
-    heroBtnPrimary: "Make an Order",
+    heroBtnPrimary: "Get a Quote",
     heroBtnGhost: "View Bale Options",
     metaPhone: "Phone",
     metaEmail: "Email",
     metaLocation: "Location",
-    orderTitle: "Make an Order",
+    orderTitle: "Get a Quote",
     orderBadge: "Fast Order Form",
     orderMuted:
       "Fill this out and we’ll receive it instantly by email so we can confirm pricing + next steps.",
@@ -1420,6 +1420,7 @@ const css = `
     .heroImageWrap{ min-height: 360px; }
   }
 `;
+
 
 
 
