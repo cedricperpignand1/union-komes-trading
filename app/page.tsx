@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 const phoneDisplay = "786-599-8099";
 const phoneRaw = "7865998099";
@@ -8,6 +8,8 @@ const email = "cedricperpignand@gmail.com";
 
 // ✅ Put your image in /public and set the path here:
 const HERO_PANEL_IMAGE_SRC = "/panel.jpg";
+
+type Lang = "en" | "ht" | "es";
 
 type OrderForm = {
   name: string;
@@ -21,7 +23,363 @@ type OrderForm = {
   notes: string;
 };
 
+const I18N: Record<
+  Lang,
+  {
+    langLabel: string;
+
+    // top language bar
+    chooseLanguage: string;
+
+    // nav
+    navMakeOrder: string;
+    navBales: string;
+    navAbout: string;
+    navContact: string;
+    navOrderNow: string;
+
+    // brand
+    brandSub: string;
+
+    // hero
+    eyebrow: string;
+    h1a: string;
+    h1bAccent: string;
+    lead: string;
+    heroBtnPrimary: string;
+    heroBtnGhost: string;
+
+    // meta
+    metaPhone: string;
+    metaEmail: string;
+    metaLocation: string;
+
+    // order section
+    orderTitle: string;
+    orderBadge: string;
+    orderMuted: string;
+
+    featuredTitle: string;
+    featuredSub: string;
+
+    // form labels
+    fullName: string;
+    fullNamePh: string;
+
+    company: string;
+    companyPh: string;
+
+    phone: string;
+    phonePh: string;
+
+    emailLabel: string;
+    emailPh: string;
+
+    destination: string;
+    destinationPh: string;
+
+    country: string;
+    countryPh: string;
+
+    pounds: string;
+    poundsPh: string;
+
+    baleType: string;
+    baleMixed: string;
+    baleSorted: string;
+
+    notes: string;
+    notesPh: string;
+
+    submit: string;
+    sending: string;
+    emailInstead: string;
+    hint: string;
+
+    // status messages
+    errFill: string;
+    okSent: string;
+    errGeneric: string;
+
+    // side panel
+    nextTitle: string;
+    next1: string;
+    next2: string;
+    next3: string;
+    urgentTitle: string;
+    urgentText: string;
+    call: (phone: string) => string;
+
+    // services
+    servicesTitle: string;
+    servicesMuted: string;
+    card1t: string;
+    card1d: string;
+    card2t: string;
+    card2d: string;
+    card3t: string;
+    card3d: string;
+    cardFoot: string;
+
+    // about
+    aboutTitle: string;
+    aboutMuted: string;
+    aboutCopy: string;
+
+    // contact
+    contactTitle: string;
+    contactMuted: string;
+
+    // footer
+    footerText: string;
+  }
+> = {
+  en: {
+    langLabel: "English",
+    chooseLanguage: "Language:",
+    navMakeOrder: "Make an Order",
+    navBales: "Bales",
+    navAbout: "About",
+    navContact: "Contact",
+    navOrderNow: "Order Now",
+    brandSub: "Miami, FL • Used Clothing Bales",
+    eyebrow: "Export-ready bales • Fast quotes • Consistent supply",
+    h1a: "Used clothing bales,",
+    h1bAccent: " packed & ready to ship",
+    lead:
+      "UNION KOMES TRADING L.L.C. supplies used clothing bales from the USA for export buyers, wholesalers, and resellers — with clear terms, quick communication, and dependable sourcing.",
+    heroBtnPrimary: "Make an Order",
+    heroBtnGhost: "View Bale Options",
+    metaPhone: "Phone",
+    metaEmail: "Email",
+    metaLocation: "Location",
+    orderTitle: "Make an Order",
+    orderBadge: "Fast Order Form",
+    orderMuted:
+      "Fill this out and we’ll receive it instantly by email so we can confirm pricing + next steps.",
+    featuredTitle: "Place your bale request",
+    featuredSub: "Mixed or Sorted • Add pounds • Submit",
+    fullName: "Full Name *",
+    fullNamePh: "Your name",
+    company: "Company (optional)",
+    companyPh: "Company name",
+    phone: "Phone (optional)",
+    phonePh: "+1 786...",
+    emailLabel: "Email (optional)",
+    emailPh: "buyer@email.com",
+    destination: "Destination Address *",
+    destinationPh: "Street / City / State / Zip",
+    country: "Country *",
+    countryPh: "e.g. United States",
+    pounds: "Pounds Needed (lbs) *",
+    poundsPh: "e.g. 5000",
+    baleType: "Bale Type *",
+    baleMixed: "Mixed",
+    baleSorted: "Sorted",
+    notes: "Notes (optional)",
+    notesPh: "Any restrictions (no shoes, no winter), categories needed, timeline, etc.",
+    submit: "Submit Order",
+    sending: "Sending...",
+    emailInstead: "Email Instead",
+    hint:
+      "* Required fields: Name, Address, Country, Pounds. Submits directly to our email.",
+    errFill:
+      "Please fill in: name, address, country, and pounds (must be a positive number).",
+    okSent: "Order request sent. We’ll contact you shortly.",
+    errGeneric: "Something went wrong.",
+    nextTitle: "What happens next",
+    next1: "We receive your order request instantly by email.",
+    next2: "We confirm availability (mixed/sorted) and shipping options.",
+    next3: "We reply with pricing + next steps (typically under 24 hours).",
+    urgentTitle: "Need it urgent?",
+    urgentText: "Call now and we’ll lock in the details quickly.",
+    call: (p) => `Call ${p}`,
+    servicesTitle: "Used Clothing Bales",
+    servicesMuted:
+      "Simple, export-ready options. Tell us your destination + target grade and we’ll quote fast.",
+    card1t: "Mixed Used Clothing Bales",
+    card1d: "Everyday assorted clothing — strong option for general resale markets.",
+    card2t: "Sorted / Category Bales",
+    card2d: "Men / women / kids or category-focused bales depending on availability.",
+    card3t: "Logistics & Export Support",
+    card3d: "Palletizing, loading coordination, and documentation-friendly terms.",
+    cardFoot: "Typical quote response: under 24 hours.",
+    aboutTitle: "About",
+    aboutMuted:
+      "Based in Miami, Florida. Focused on reliable supply, clean communication, and smooth export flow.",
+    aboutCopy:
+      "UNION KOMES TRADING L.L.C. specializes in sourcing and supplying used clothing bales from the USA. We keep it simple: quick responses, clear terms, and consistent follow-through so buyers can plan shipments with confidence.",
+    contactTitle: "Contact",
+    contactMuted: "Reach out for bale pricing or export questions.",
+    footerText: "Used Clothing Bales • Miami, FL",
+  },
+
+  ht: {
+    langLabel: "Kreyòl Ayisyen",
+    chooseLanguage: "Lang:",
+    navMakeOrder: "Fè yon kòmand",
+    navBales: "Bale yo",
+    navAbout: "Sou nou",
+    navContact: "Kontak",
+    navOrderNow: "Kòmande kounye a",
+    brandSub: "Miami, FL • Bale Rad Itilize",
+    eyebrow: "Bale pare pou ekspòtasyon • Pri rapid • Stock stab",
+    h1a: "Bale rad itilize,",
+    h1bAccent: " anbale & pare pou voye",
+    lead:
+      "UNION KOMES TRADING L.L.C. bay bale rad itilize soti Etazini pou achtè ekspòtasyon, grossist, ak revandè — ak kondisyon klè, repons rapid, ak sous serye.",
+    heroBtnPrimary: "Fè yon kòmand",
+    heroBtnGhost: "Gade opsyon bale yo",
+    metaPhone: "Telefòn",
+    metaEmail: "Imèl",
+    metaLocation: "Kote",
+    orderTitle: "Fè yon kòmand",
+    orderBadge: "Fòm rapid",
+    orderMuted:
+      "Ranpli sa a, n ap resevwa li imedyatman pa imèl pou nou konfime pri + etap kap vini yo.",
+    featuredTitle: "Mete demann bale ou",
+    featuredSub: "Melanje oswa Triye • Mete liv • Voye",
+    fullName: "Non konplè *",
+    fullNamePh: "Non ou",
+    company: "Konpayi (opsyonèl)",
+    companyPh: "Non konpayi an",
+    phone: "Telefòn (opsyonèl)",
+    phonePh: "+1 786...",
+    emailLabel: "Imèl (opsyonèl)",
+    emailPh: "buyer@email.com",
+    destination: "Adrès destinasyon *",
+    destinationPh: "Lari / Vil / Eta / Kòd postal",
+    country: "Peyi *",
+    countryPh: "eg. Ayiti",
+    pounds: "Kantite liv (lbs) *",
+    poundsPh: "eg. 5000",
+    baleType: "Kalite bale *",
+    baleMixed: "Melanje",
+    baleSorted: "Triye",
+    notes: "Nòt (opsyonèl)",
+    notesPh: "Nenpòt restriksyon (pa soulye, pa sezon fredi), kategori, delè, elatriye.",
+    submit: "Voye kòmand",
+    sending: "Ap voye...",
+    emailInstead: "Voye pa imèl",
+    hint:
+      "* Chan obligatwa: Non, Adrès, Peyi, Liv. Li ale dirèkteman nan imèl nou.",
+    errFill:
+      "Tanpri ranpli: non, adrès, peyi, ak liv (dwe yon nimewo pozitif).",
+    okSent: "Nou resevwa demann ou a. N ap kontakte ou byento.",
+    errGeneric: "Gen yon pwoblèm.",
+    nextTitle: "Kisa k ap pase apre",
+    next1: "Nou resevwa demann ou a imedyatman pa imèl.",
+    next2: "Nou konfime disponiblite (melanje/triyè) ak opsyon chajman.",
+    next3: "Nou reponn ak pri + etap kap vini yo (an jeneral < 24 èdtan).",
+    urgentTitle: "Ou bezwen li vit?",
+    urgentText: "Rele kounye a pou nou fè sa rapid.",
+    call: (p) => `Rele ${p}`,
+    servicesTitle: "Bale Rad Itilize",
+    servicesMuted:
+      "Opsyon senp, pare pou ekspòtasyon. Di nou destinasyon + kalite ou vize a, n ap ba ou pri rapid.",
+    card1t: "Bale Melanje",
+    card1d: "Rad chak jou melanje — bon pou mache revann nòmal.",
+    card2t: "Bale Triye / Pa Kategori",
+    card2d: "Gason / fi / timoun oswa bale pa kategori selon sa ki disponib.",
+    card3t: "Lojistik & Sipò Ekspòtasyon",
+    card3d: "Palèt, kowòdinasyon chajman, ak tèm fasil pou dokiman.",
+    cardFoot: "Repons pou pri: an jeneral < 24 èdtan.",
+    aboutTitle: "Sou nou",
+    aboutMuted:
+      "Nou baze nan Miami, Florid. Nou konsantre sou stock serye, bon kominikasyon, ak ekspòtasyon san tèt chaje.",
+    aboutCopy:
+      "UNION KOMES TRADING L.L.C. espesyalize nan jwenn epi founi bale rad itilize soti Etazini. Nou fè li senp: repons rapid, kondisyon klè, epi nou suiv dosye yo seryezman pou achtè yo ka planifye chajman yo ak konfyans.",
+    contactTitle: "Kontak",
+    contactMuted: "Ekri oswa rele pou pri bale oswa kesyon ekspòtasyon.",
+    footerText: "Bale Rad Itilize • Miami, FL",
+  },
+
+  es: {
+    langLabel: "Español",
+    chooseLanguage: "Idioma:",
+    navMakeOrder: "Hacer un pedido",
+    navBales: "Fardos",
+    navAbout: "Nosotros",
+    navContact: "Contacto",
+    navOrderNow: "Pedir ahora",
+    brandSub: "Miami, FL • Fardos de ropa usada",
+    eyebrow: "Fardos listos para exportación • Cotización rápida • Suministro constante",
+    h1a: "Fardos de ropa usada,",
+    h1bAccent: " empacados y listos para enviar",
+    lead:
+      "UNION KOMES TRADING L.L.C. suministra fardos de ropa usada desde EE. UU. para compradores de exportación, mayoristas y revendedores — con términos claros, comunicación rápida y abastecimiento confiable.",
+    heroBtnPrimary: "Hacer un pedido",
+    heroBtnGhost: "Ver opciones de fardos",
+    metaPhone: "Teléfono",
+    metaEmail: "Correo",
+    metaLocation: "Ubicación",
+    orderTitle: "Hacer un pedido",
+    orderBadge: "Formulario rápido",
+    orderMuted:
+      "Completa esto y lo recibiremos al instante por correo para confirmar precio + próximos pasos.",
+    featuredTitle: "Solicita tu fardo",
+    featuredSub: "Mixto o Clasificado • Agrega libras • Enviar",
+    fullName: "Nombre completo *",
+    fullNamePh: "Tu nombre",
+    company: "Empresa (opcional)",
+    companyPh: "Nombre de la empresa",
+    phone: "Teléfono (opcional)",
+    phonePh: "+1 786...",
+    emailLabel: "Correo (opcional)",
+    emailPh: "buyer@email.com",
+    destination: "Dirección de destino *",
+    destinationPh: "Calle / Ciudad / Estado / Código postal",
+    country: "País *",
+    countryPh: "ej. República Dominicana",
+    pounds: "Libras necesarias (lbs) *",
+    poundsPh: "ej. 5000",
+    baleType: "Tipo de fardo *",
+    baleMixed: "Mixto",
+    baleSorted: "Clasificado",
+    notes: "Notas (opcional)",
+    notesPh:
+      "Restricciones (sin zapatos, sin invierno), categorías, tiempos, etc.",
+    submit: "Enviar pedido",
+    sending: "Enviando...",
+    emailInstead: "Enviar por correo",
+    hint:
+      "* Campos obligatorios: Nombre, Dirección, País, Libras. Se envía directo a nuestro correo.",
+    errFill:
+      "Por favor completa: nombre, dirección, país y libras (debe ser un número positivo).",
+    okSent: "Solicitud enviada. Te contactaremos pronto.",
+    errGeneric: "Algo salió mal.",
+    nextTitle: "Qué sigue",
+    next1: "Recibimos tu solicitud al instante por correo.",
+    next2: "Confirmamos disponibilidad (mixto/clasificado) y opciones de envío.",
+    next3: "Respondemos con precio + próximos pasos (normalmente en menos de 24 horas).",
+    urgentTitle: "¿Lo necesitas urgente?",
+    urgentText: "Llama ahora y cerramos los detalles rápido.",
+    call: (p) => `Llamar ${p}`,
+    servicesTitle: "Fardos de ropa usada",
+    servicesMuted:
+      "Opciones simples y listas para exportación. Dinos destino + calidad objetivo y cotizamos rápido.",
+    card1t: "Fardos mixtos de ropa usada",
+    card1d: "Ropa surtida de uso diario — ideal para reventa general.",
+    card2t: "Fardos clasificados / por categoría",
+    card2d: "Hombre / mujer / niños o por categoría según disponibilidad.",
+    card3t: "Logística y soporte de exportación",
+    card3d: "Paletizado, coordinación de carga y términos amigables para documentación.",
+    cardFoot: "Respuesta típica: menos de 24 horas.",
+    aboutTitle: "Nosotros",
+    aboutMuted:
+      "Basados en Miami, Florida. Enfocados en suministro confiable, comunicación clara y exportación fluida.",
+    aboutCopy:
+      "UNION KOMES TRADING L.L.C. se especializa en abastecer y suministrar fardos de ropa usada desde EE. UU. Lo mantenemos simple: respuestas rápidas, términos claros y cumplimiento consistente para que los compradores planifiquen sus envíos con confianza.",
+    contactTitle: "Contacto",
+    contactMuted: "Escríbenos o llámanos para precios o preguntas de exportación.",
+    footerText: "Fardos de ropa usada • Miami, FL",
+  },
+};
+
 export default function Home() {
+  const [lang, setLang] = useState<Lang>("en");
+  const t = I18N[lang];
+
   const [order, setOrder] = useState<OrderForm>({
     name: "",
     company: "",
@@ -62,10 +420,7 @@ export default function Home() {
     setStatus(null);
 
     if (!canSubmit) {
-      setStatus({
-        type: "err",
-        msg: "Please fill in: name, address, country, and pounds (must be a positive number).",
-      });
+      setStatus({ type: "err", msg: t.errFill });
       return;
     }
 
@@ -78,6 +433,7 @@ export default function Home() {
         body: JSON.stringify({
           ...order,
           pounds: poundsNumber,
+          lang,
         }),
       });
 
@@ -96,7 +452,7 @@ export default function Home() {
         throw new Error(data?.error || text || `Request failed (${res.status})`);
       }
 
-      setStatus({ type: "ok", msg: "Order request sent. We’ll contact you shortly." });
+      setStatus({ type: "ok", msg: t.okSent });
 
       setOrder({
         name: "",
@@ -110,7 +466,7 @@ export default function Home() {
         notes: "",
       });
     } catch (err: any) {
-      setStatus({ type: "err", msg: err?.message || "Something went wrong." });
+      setStatus({ type: "err", msg: err?.message || t.errGeneric });
     } finally {
       setSubmitting(false);
     }
@@ -118,23 +474,74 @@ export default function Home() {
 
   return (
     <main className="wrap">
+      {/* ✅ Top language bar */}
+      <div className="topBar">
+        <div className="topBarInner">
+          <div className="topBarLeft">
+            <span className="topBarLabel">{t.chooseLanguage}</span>
+            <div className="langPills" role="tablist" aria-label="Language selector">
+              <button
+                type="button"
+                className={`langPill ${lang === "en" ? "on" : ""}`}
+                onClick={() => setLang("en")}
+                role="tab"
+                aria-selected={lang === "en"}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                className={`langPill ${lang === "ht" ? "on" : ""}`}
+                onClick={() => setLang("ht")}
+                role="tab"
+                aria-selected={lang === "ht"}
+              >
+                Kreyòl
+              </button>
+              <button
+                type="button"
+                className={`langPill ${lang === "es" ? "on" : ""}`}
+                onClick={() => setLang("es")}
+                role="tab"
+                aria-selected={lang === "es"}
+              >
+                Español
+              </button>
+            </div>
+          </div>
+
+          <div className="topBarRight">
+            <a className="topMiniLink" href={`tel:+1${phoneRaw}`}>
+              {phoneDisplay}
+            </a>
+            <span className="dot" aria-hidden />
+            <a
+              className="topMiniLink"
+              href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}
+            >
+              {email}
+            </a>
+          </div>
+        </div>
+      </div>
+
       <header className="header">
         <div className="brand">
           <div className="brandText">
             <div className="brandName">UNION KOMES TRADING L.L.C.</div>
-            <div className="brandSub">Miami, FL • Used Clothing Bales</div>
+            <div className="brandSub">{t.brandSub}</div>
           </div>
         </div>
 
         <nav className="nav">
           <a className="orderLink" href="#order">
-            Make an Order
+            {t.navMakeOrder}
           </a>
-          <a href="#services">Bales</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#services">{t.navBales}</a>
+          <a href="#about">{t.navAbout}</a>
+          <a href="#contact">{t.navContact}</a>
           <a className="navCta" href="#order">
-            Order Now
+            {t.navOrderNow}
           </a>
         </nav>
       </header>
@@ -143,32 +550,28 @@ export default function Home() {
         <div className="heroInner">
           <div className="eyebrow">
             <span className="spark" aria-hidden />
-            Export-ready bales • Fast quotes • Consistent supply
+            {t.eyebrow}
           </div>
 
           <h1 className="h1">
-            Used clothing bales,
-            <span className="accent"> packed & ready to ship</span>.
+            {t.h1a}
+            <span className="accent">{t.h1bAccent}</span>.
           </h1>
 
-          <p className="lead">
-            UNION KOMES TRADING L.L.C. supplies used clothing bales from the USA for export
-            buyers, wholesalers, and resellers — with clear terms, quick communication,
-            and dependable sourcing.
-          </p>
+          <p className="lead">{t.lead}</p>
 
           <div className="heroActions">
             <a className="btnPrimary" href="#order">
-              Make an Order
+              {t.heroBtnPrimary}
             </a>
             <a className="btnGhost" href="#services">
-              View Bale Options
+              {t.heroBtnGhost}
             </a>
           </div>
 
           <div className="heroMeta">
             <a className="metaItem" href={`tel:+1${phoneRaw}`}>
-              <div className="metaLabel">Phone</div>
+              <div className="metaLabel">{t.metaPhone}</div>
               <div className="metaValue">{phoneDisplay}</div>
             </a>
 
@@ -176,12 +579,12 @@ export default function Home() {
               className="metaItem"
               href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}
             >
-              <div className="metaLabel">Email</div>
+              <div className="metaLabel">{t.metaEmail}</div>
               <div className="metaValue">{email}</div>
             </a>
 
             <div className="metaItem">
-              <div className="metaLabel">Location</div>
+              <div className="metaLabel">{t.metaLocation}</div>
               <div className="metaValue">Miami, FL (USA)</div>
             </div>
           </div>
@@ -196,123 +599,121 @@ export default function Home() {
       <section id="order" className="section orderSection">
         <div className="sectionHead">
           <div className="orderHeadRow">
-            <h2 className="h2">Make an Order</h2>
-            <span className="badge">Fast Order Form</span>
+            <h2 className="h2">{t.orderTitle}</h2>
+            <span className="badge">{t.orderBadge}</span>
           </div>
-          <p className="muted">
-            Fill this out and we’ll receive it instantly by email so we can confirm pricing + next steps.
-          </p>
+          <p className="muted">{t.orderMuted}</p>
         </div>
 
         <div className="orderGrid">
           <form className="panel panelFeatured form" onSubmit={submitOrder}>
             <div className="featuredTop">
-              <div className="featuredTitle">Place your bale request</div>
-              <div className="featuredSub">Mixed or Sorted • Add pounds • Submit</div>
+              <div className="featuredTitle">{t.featuredTitle}</div>
+              <div className="featuredSub">{t.featuredSub}</div>
             </div>
 
             <div className="formRow2">
               <div className="field">
-                <label className="lab">Full Name *</label>
+                <label className="lab">{t.fullName}</label>
                 <input
                   className="input"
                   value={order.name}
                   onChange={(e) => update("name", e.target.value)}
-                  placeholder="Your name"
+                  placeholder={t.fullNamePh}
                 />
               </div>
               <div className="field">
-                <label className="lab">Company (optional)</label>
+                <label className="lab">{t.company}</label>
                 <input
                   className="input"
                   value={order.company}
                   onChange={(e) => update("company", e.target.value)}
-                  placeholder="Company name"
+                  placeholder={t.companyPh}
                 />
               </div>
             </div>
 
             <div className="formRow2">
               <div className="field">
-                <label className="lab">Phone (optional)</label>
+                <label className="lab">{t.phone}</label>
                 <input
                   className="input"
                   value={order.phone}
                   onChange={(e) => update("phone", e.target.value)}
-                  placeholder="+1 786..."
+                  placeholder={t.phonePh}
                 />
               </div>
               <div className="field">
-                <label className="lab">Email (optional)</label>
+                <label className="lab">{t.emailLabel}</label>
                 <input
                   className="input"
                   value={order.email}
                   onChange={(e) => update("email", e.target.value)}
-                  placeholder="buyer@email.com"
+                  placeholder={t.emailPh}
                 />
               </div>
             </div>
 
             <div className="field">
-              <label className="lab">Destination Address *</label>
+              <label className="lab">{t.destination}</label>
               <input
                 className="input"
                 value={order.address}
                 onChange={(e) => update("address", e.target.value)}
-                placeholder="Street / City / State / Zip"
+                placeholder={t.destinationPh}
               />
             </div>
 
             <div className="formRow2">
               <div className="field">
-                <label className="lab">Country *</label>
+                <label className="lab">{t.country}</label>
                 <input
                   className="input"
                   value={order.country}
                   onChange={(e) => update("country", e.target.value)}
-                  placeholder="e.g. United States"
+                  placeholder={t.countryPh}
                 />
               </div>
 
               <div className="field">
-                <label className="lab">Pounds Needed (lbs) *</label>
+                <label className="lab">{t.pounds}</label>
                 <input
                   className="input"
                   value={order.pounds}
                   onChange={(e) => update("pounds", e.target.value)}
-                  placeholder="e.g. 5000"
+                  placeholder={t.poundsPh}
                   inputMode="numeric"
                 />
               </div>
             </div>
 
             <div className="field">
-              <label className="lab">Bale Type *</label>
+              <label className="lab">{t.baleType}</label>
               <div className="seg">
                 <button
                   type="button"
                   className={`segBtn ${order.baleType === "mixed" ? "on" : ""}`}
                   onClick={() => update("baleType", "mixed")}
                 >
-                  Mixed
+                  {t.baleMixed}
                 </button>
                 <button
                   type="button"
                   className={`segBtn ${order.baleType === "sorted" ? "on" : ""}`}
                   onClick={() => update("baleType", "sorted")}
                 >
-                  Sorted
+                  {t.baleSorted}
                 </button>
               </div>
             </div>
 
             <div className="field">
-              <label className="lab">Notes (optional)</label>
+              <label className="lab">{t.notes}</label>
               <textarea
                 className="textarea"
                 value={order.notes}
                 onChange={(e) => update("notes", e.target.value)}
-                placeholder="Any restrictions (no shoes, no winter), categories needed, timeline, etc."
+                placeholder={t.notesPh}
                 rows={4}
               />
             </div>
@@ -321,43 +722,41 @@ export default function Home() {
 
             <div className="heroActions">
               <button className="btnPrimary" type="submit" disabled={!canSubmit}>
-                {submitting ? "Sending..." : "Submit Order"}
+                {submitting ? t.sending : t.submit}
               </button>
               <a
                 className="btnGhost"
                 href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Order%20Request`}
               >
-                Email Instead
+                {t.emailInstead}
               </a>
             </div>
 
-            <div className="hint">
-              * Required fields: Name, Address, Country, Pounds. Submits directly to our email.
-            </div>
+            <div className="hint">{t.hint}</div>
           </form>
 
           <div className="panel orderSide orderSideFeatured">
-            <div className="sideTitle">What happens next</div>
+            <div className="sideTitle">{t.nextTitle}</div>
             <div className="sideList">
               <div className="sideItem">
                 <div className="sideK">1</div>
-                <div className="sideV">We receive your order request instantly by email.</div>
+                <div className="sideV">{t.next1}</div>
               </div>
               <div className="sideItem">
                 <div className="sideK">2</div>
-                <div className="sideV">We confirm availability (mixed/sorted) and shipping options.</div>
+                <div className="sideV">{t.next2}</div>
               </div>
               <div className="sideItem">
                 <div className="sideK">3</div>
-                <div className="sideV">We reply with pricing + next steps (typically under 24 hours).</div>
+                <div className="sideV">{t.next3}</div>
               </div>
             </div>
 
             <div className="orderSideCTA">
-              <div className="orderSideCTATitle">Need it urgent?</div>
-              <div className="orderSideCTAText">Call now and we’ll lock in the details quickly.</div>
+              <div className="orderSideCTATitle">{t.urgentTitle}</div>
+              <div className="orderSideCTAText">{t.urgentText}</div>
               <a className="btnPrimary" href={`tel:+1${phoneRaw}`}>
-                Call {phoneDisplay}
+                {t.call(phoneDisplay)}
               </a>
             </div>
           </div>
@@ -367,22 +766,20 @@ export default function Home() {
       {/* ✅ SERVICES (Used Clothing Bales) now AFTER order */}
       <section id="services" className="section">
         <div className="sectionHead">
-          <h2 className="h2">Used Clothing Bales</h2>
-          <p className="muted">
-            Simple, export-ready options. Tell us your destination + target grade and we’ll quote fast.
-          </p>
+          <h2 className="h2">{t.servicesTitle}</h2>
+          <p className="muted">{t.servicesMuted}</p>
         </div>
 
         <div className="cards">
           {[
-            ["Mixed Used Clothing Bales", "Everyday assorted clothing — strong option for general resale markets."],
-            ["Sorted / Category Bales", "Men / women / kids or category-focused bales depending on availability."],
-            ["Logistics & Export Support", "Palletizing, loading coordination, and documentation-friendly terms."],
+            [t.card1t, t.card1d],
+            [t.card2t, t.card2d],
+            [t.card3t, t.card3d],
           ].map(([title, desc]) => (
             <div key={title} className="card">
               <div className="cardTitle">{title}</div>
               <div className="cardDesc">{desc}</div>
-              <div className="cardFoot">Typical quote response: under 24 hours.</div>
+              <div className="cardFoot">{t.cardFoot}</div>
             </div>
           ))}
         </div>
@@ -391,17 +788,11 @@ export default function Home() {
       <section id="about" className="section">
         <div className="panel">
           <div className="sectionHead tight">
-            <h2 className="h2">About</h2>
-            <p className="muted">
-              Based in Miami, Florida. Focused on reliable supply, clean communication, and smooth export flow.
-            </p>
+            <h2 className="h2">{t.aboutTitle}</h2>
+            <p className="muted">{t.aboutMuted}</p>
           </div>
 
-          <p className="copy">
-            UNION KOMES TRADING L.L.C. specializes in sourcing and supplying used clothing bales from the USA.
-            We keep it simple: quick responses, clear terms, and consistent follow-through so buyers can plan
-            shipments with confidence.
-          </p>
+          <p className="copy">{t.aboutCopy}</p>
         </div>
       </section>
 
@@ -409,25 +800,25 @@ export default function Home() {
         <div className="contact contactSingle">
           <div className="panel">
             <div className="sectionHead tight">
-              <h2 className="h2">Contact</h2>
-              <p className="muted">Reach out for bale pricing or export questions.</p>
+              <h2 className="h2">{t.contactTitle}</h2>
+              <p className="muted">{t.contactMuted}</p>
             </div>
 
             <div className="contactLines">
               <div className="line">
-                <span className="label">Location</span>
+                <span className="label">{t.metaLocation}</span>
                 <span className="value">Miami, FL (USA)</span>
               </div>
 
               <div className="line">
-                <span className="label">Phone</span>
+                <span className="label">{t.metaPhone}</span>
                 <a className="valueLink" href={`tel:+1${phoneRaw}`}>
                   {phoneDisplay}
                 </a>
               </div>
 
               <div className="line">
-                <span className="label">Email</span>
+                <span className="label">{t.metaEmail}</span>
                 <a
                   className="valueLink"
                   href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}
@@ -439,10 +830,10 @@ export default function Home() {
 
             <div className="heroActions">
               <a className="btnPrimary" href="#order">
-                Make an Order
+                {t.navMakeOrder}
               </a>
               <a className="btnGhost" href={`tel:+1${phoneRaw}`}>
-                Call Now
+                {t.call(phoneDisplay)}
               </a>
             </div>
           </div>
@@ -452,13 +843,13 @@ export default function Home() {
       <footer className="footer">
         <div className="footerInner">
           <div className="footerText">
-            © {new Date().getFullYear()} UNION KOMES TRADING L.L.C. • Used Clothing Bales • Miami, FL
+            © {new Date().getFullYear()} UNION KOMES TRADING L.L.C. • {t.footerText}
           </div>
           <div className="footerLinks">
-            <a href="#order">Make an Order</a>
-            <a href="#services">Bales</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <a href="#order">{t.navMakeOrder}</a>
+            <a href="#services">{t.navBales}</a>
+            <a href="#about">{t.navAbout}</a>
+            <a href="#contact">{t.navContact}</a>
           </div>
         </div>
       </footer>
@@ -505,10 +896,76 @@ const css = `
       linear-gradient(var(--bg), var(--bg));
   }
 
+  /* ✅ Top language bar */
+  .topBar{
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    backdrop-filter: blur(10px);
+    background: rgba(7,10,18,.62);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .topBarInner{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .topBarLeft{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .topBarLabel{
+    font-size: 12px;
+    color: rgba(255,255,255,.65);
+    font-weight: 900;
+    letter-spacing: .2px;
+  }
+  .langPills{ display:flex; gap: 8px; flex-wrap: wrap; }
+  .langPill{
+    border-radius: 999px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.85);
+    font-size: 12px;
+    font-weight: 950;
+    cursor: pointer;
+    box-shadow: var(--shadow2);
+  }
+  .langPill.on{
+    border-color: rgba(250,204,21,.40);
+    background: rgba(250,204,21,.14);
+    color: rgba(255,255,255,.95);
+  }
+  .topBarRight{
+    display:none;
+    align-items:center;
+    gap: 10px;
+    color: rgba(255,255,255,.70);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .topMiniLink{
+    color: rgba(255,255,255,.78);
+    font-weight: 900;
+  }
+  .dot{
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.30);
+  }
+
   .header{
     max-width: 1120px;
     margin: 0 auto;
-    padding: 22px 20px;
+    padding: 18px 20px 22px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -861,6 +1318,7 @@ const css = `
   .footerLinks{ display:flex; gap: 14px; font-size: 11px; color: rgba(255,255,255,.62); }
 
   @media (min-width: 860px){
+    .topBarRight{ display:flex; }
     .nav{ display:flex; }
     .hero{ grid-template-columns: 1.2fr .8fr; gap: 18px; padding-top: 36px; }
     .heroMeta{ grid-template-columns: repeat(3, 1fr); }
