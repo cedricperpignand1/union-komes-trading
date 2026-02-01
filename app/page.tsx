@@ -71,16 +71,30 @@ export default function Home() {
       setSubmitting(true);
 
       const res = await fetch("/api/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...order,
-          pounds: poundsNumber,
-        }),
-      });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    ...order,
+    pounds: poundsNumber,
+  }),
+});
 
-      const data = (await res.json().catch(() => null)) as any;
-      if (!res.ok) throw new Error(data?.error || "Failed to submit order.");
+// 👇 THIS PART IS THE FIX
+let data: any = null;
+let text = "";
+
+try {
+  data = await res.json();
+} catch {
+  try {
+    text = await res.text();
+  } catch {}
+}
+
+if (!res.ok) {
+  throw new Error(data?.error || text || `Request failed (${res.status})`);
+}
+
 
       setStatus({ type: "ok", msg: "Order request sent. We’ll contact you shortly." });
 
