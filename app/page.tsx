@@ -81,7 +81,7 @@ export default function Home() {
         }),
       });
 
-      // ✅ Show real error messages
+      // ✅ show real error messages
       let data: any = null;
       let text = "";
       try {
@@ -127,10 +127,10 @@ export default function Home() {
         </div>
 
         <nav className="nav">
-          <a href="#services">Bales</a>
           <a className="orderLink" href="#order">
             Make an Order
           </a>
+          <a href="#services">Bales</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
           <a className="navCta" href="#order">
@@ -192,30 +192,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="services" className="section">
-        <div className="sectionHead">
-          <h2 className="h2">Used Clothing Bales</h2>
-          <p className="muted">
-            Simple, export-ready options. Tell us your destination + target grade and we’ll quote fast.
-          </p>
-        </div>
-
-        <div className="cards">
-          {[
-            ["Mixed Used Clothing Bales", "Everyday assorted clothing — strong option for general resale markets."],
-            ["Sorted / Category Bales", "Men / women / kids or category-focused bales depending on availability."],
-            ["Logistics & Export Support", "Palletizing, loading coordination, and documentation-friendly terms."],
-          ].map(([title, desc]) => (
-            <div key={title} className="card">
-              <div className="cardTitle">{title}</div>
-              <div className="cardDesc">{desc}</div>
-              <div className="cardFoot">Typical quote response: under 24 hours.</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ✅ ORDER SECTION (Featured) */}
+      {/* ✅ ORDER PANEL moved BEFORE services */}
       <section id="order" className="section orderSection">
         <div className="sectionHead">
           <div className="orderHeadRow">
@@ -387,6 +364,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ✅ SERVICES (Used Clothing Bales) now AFTER order */}
+      <section id="services" className="section">
+        <div className="sectionHead">
+          <h2 className="h2">Used Clothing Bales</h2>
+          <p className="muted">
+            Simple, export-ready options. Tell us your destination + target grade and we’ll quote fast.
+          </p>
+        </div>
+
+        <div className="cards">
+          {[
+            ["Mixed Used Clothing Bales", "Everyday assorted clothing — strong option for general resale markets."],
+            ["Sorted / Category Bales", "Men / women / kids or category-focused bales depending on availability."],
+            ["Logistics & Export Support", "Palletizing, loading coordination, and documentation-friendly terms."],
+          ].map(([title, desc]) => (
+            <div key={title} className="card">
+              <div className="cardTitle">{title}</div>
+              <div className="cardDesc">{desc}</div>
+              <div className="cardFoot">Typical quote response: under 24 hours.</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section id="about" className="section">
         <div className="panel">
           <div className="sectionHead tight">
@@ -454,8 +455,8 @@ export default function Home() {
             © {new Date().getFullYear()} UNION KOMES TRADING L.L.C. • Used Clothing Bales • Miami, FL
           </div>
           <div className="footerLinks">
-            <a href="#services">Bales</a>
             <a href="#order">Make an Order</a>
+            <a href="#services">Bales</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
           </div>
@@ -677,12 +678,6 @@ const css = `
 
   .muted{ margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 72ch; }
 
-  .cards{ margin-top: 18px; display:grid; grid-template-columns: 1fr; gap: 12px; }
-  .card{ border-radius: 26px; padding: 18px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow2); }
-  .cardTitle{ font-size: 15px; font-weight: 950; }
-  .cardDesc{ margin-top: 8px; font-size: 13px; color: rgba(255,255,255,.74); line-height: 1.7; }
-  .cardFoot{ margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.55); }
-
   .panel{ border-radius: 26px; padding: 18px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow2); }
 
   /* ✅ ORDER: section stands out */
@@ -829,6 +824,13 @@ const css = `
   }
   .orderSideCTATitle{ font-weight: 950; }
   .orderSideCTAText{ font-size: 12px; color: rgba(255,255,255,.66); line-height: 1.6; }
+
+  /* Services cards */
+  .cards{ margin-top: 18px; display:grid; grid-template-columns: 1fr; gap: 12px; }
+  .card{ border-radius: 26px; padding: 18px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow2); }
+  .cardTitle{ font-size: 15px; font-weight: 950; }
+  .cardDesc{ margin-top: 8px; font-size: 13px; color: rgba(255,255,255,.74); line-height: 1.7; }
+  .cardFoot{ margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.55); }
 
   .contactLines{ margin-top: 14px; display:grid; gap: 10px; }
   .line{
