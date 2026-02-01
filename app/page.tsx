@@ -533,13 +533,14 @@ export default function Home() {
           {/* ✅ Logo next to company name */}
           <div className="brandLogoWrap" aria-hidden>
             <Image
-              src="/logoukt1.png"
-              alt="UNION KOMES TRADING logo"
-              width={44}
-              height={44}
-              className="brandLogo"
-              priority
-            />
+  src="/logoukt.png"
+  alt="UNION KOMES TRADING logo"
+  width={54}
+  height={54}
+  className="brandLogo"
+  priority
+/>
+
           </div>
 
           <div className="brandText">
@@ -998,19 +999,12 @@ const css = `
     gap: 12px;
     min-width: 0;
   }
-  .brandLogoWrap{
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    background: rgba(255,255,255,.80);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow: hidden;
-    flex: 0 0 auto;
-  }
+ .brandLogo{
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain;
+}
+
   .brandLogo{
     width: 34px !important;
     height: 34px !important;
@@ -1426,4 +1420,5 @@ const css = `
     .heroImageWrap{ min-height: 360px; }
   }
 `;
+
 
