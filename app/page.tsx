@@ -263,7 +263,7 @@ if (!res.ok) {
             </div>
 
             <div className="field">
-              <label className="lab">Address *</label>
+              <label className="lab">Destination Address *</label>
               <input
                 className="input"
                 value={order.address}
@@ -279,7 +279,7 @@ if (!res.ok) {
                   className="input"
                   value={order.country}
                   onChange={(e) => update("country", e.target.value)}
-                  placeholder="e.g. Guatemala"
+                  placeholder="e.g. United States"
                 />
               </div>
 
