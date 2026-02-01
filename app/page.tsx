@@ -274,7 +274,7 @@ if (!res.ok) {
 
             <div className="formRow2">
               <div className="field">
-                <label className="lab">Destination Country *</label>
+                <label className="lab">Country *</label>
                 <input
                   className="input"
                   value={order.country}
