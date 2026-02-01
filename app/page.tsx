@@ -1000,8 +1000,8 @@ const css = `
     min-width: 0;
   }
  .brandLogo{
-  width: 54px !important;
-  height: 54px !important;
+  width: 75px !important;
+  height: 75px !important;
   object-fit: contain;
 }
 
@@ -1420,5 +1420,6 @@ const css = `
     .heroImageWrap{ min-height: 360px; }
   }
 `;
+
 
 
