@@ -5,7 +5,7 @@ const phoneRaw = "7865998099";
 const email = "cedricperpignand@gmail.com";
 
 // ✅ Put your image in /public and set the path here:
-const HERO_PANEL_IMAGE_SRC = "/panel.jpg"; // e.g. /what-you-get.jpg
+const HERO_PANEL_IMAGE_SRC = "/panel.jpg"; // e.g. /bales.jpg
 
 export default function Home() {
   return (
@@ -15,16 +15,16 @@ export default function Home() {
           {/* ✅ Removed the circled UK logo */}
           <div className="brandText">
             <div className="brandName">UNION KOMES TRADING L.L.C.</div>
-            <div className="brandSub">Miami, FL</div>
+            <div className="brandSub">Miami, FL • Used Clothing Bales</div>
           </div>
         </div>
 
         <nav className="nav">
-          <a href="#services">Services</a>
+          <a href="#services">Bales</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
           <a className="navCta" href="#contact">
-            Get a Quote
+            Get Pricing
           </a>
         </nav>
       </header>
@@ -33,25 +33,25 @@ export default function Home() {
         <div className="heroInner">
           <div className="eyebrow">
             <span className="spark" aria-hidden />
-            Reliable sourcing • Fast communication • Clear terms
+            Export-ready bales • Fast quotes • Consistent supply
           </div>
 
           <h1 className="h1">
-            Modern trading & sourcing,
-            <span className="accent"> built for speed</span>.
+            Used clothing bales,
+            <span className="accent"> packed & ready to ship</span>.
           </h1>
 
           <p className="lead">
-            UNION KOMES TRADING L.L.C. helps clients move products efficiently with dependable sourcing,
-            transparent updates, and logistics-first execution.
+            UNION KOMES TRADING L.L.C. supplies used clothing bales from the USA for export buyers,
+            wholesalers, and resellers — with clear terms, quick communication, and dependable sourcing.
           </p>
 
           <div className="heroActions">
             <a className="btnPrimary" href="#contact">
-              Request a Quote
+              Request Pricing
             </a>
             <a className="btnGhost" href="#services">
-              View Services
+              View Bale Options
             </a>
           </div>
 
@@ -63,7 +63,7 @@ export default function Home() {
 
             <a
               className="metaItem"
-              href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
+              href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Pricing%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
             >
               <div className="metaLabel">Email</div>
               <div className="metaValue">{email}</div>
@@ -71,7 +71,7 @@ export default function Home() {
 
             <div className="metaItem">
               <div className="metaLabel">Location</div>
-              <div className="metaValue">Miami, FL</div>
+              <div className="metaValue">Miami, FL (USA)</div>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function Home() {
           <img
             className="heroImage"
             src={HERO_PANEL_IMAGE_SRC}
-            alt="Union Komes Trading"
+            alt="Used clothing bales ready for export"
             loading="eager"
           />
         </div>
@@ -89,25 +89,25 @@ export default function Home() {
 
       <section id="services" className="section">
         <div className="sectionHead">
-          <h2 className="h2">Services</h2>
+          <h2 className="h2">Used Clothing Bales</h2>
           <p className="muted">
-            A focused set of services designed to keep deals moving and communication clean.
+            Simple, export-ready options. Tell us your destination + target grade and we’ll quote fast.
           </p>
         </div>
 
         <div className="cards">
           {[
             [
-              "Product Sourcing",
-              "Identify suppliers, validate availability, and coordinate procurement.",
+              "Mixed Used Clothing Bales",
+              "Everyday assorted clothing — a strong option for general resale markets.",
             ],
             [
-              "Trade Facilitation",
-              "Support documentation-ready terms, coordination, and timeline alignment.",
+              "Sorted / Category Bales",
+              "Men / women / kids or category-focused bales depending on availability.",
             ],
             [
-              "Logistics Support",
-              "Planning-first approach to reduce delays and simplify delivery steps.",
+              "Logistics & Export Support",
+              "Palletizing, loading coordination, and documentation-friendly terms.",
             ],
           ].map(([title, desc]) => (
             <div key={title} className="card">
@@ -117,25 +117,36 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        <div className="note">
+          <div className="noteTitle">What to include for fastest pricing</div>
+          <div className="noteDesc">
+            Destination country • Estimated quantity (lbs or bales) • Preferred mix (men/women/kids) •
+            Any restrictions (no shoes, no winter, etc.)
+          </div>
+        </div>
       </section>
 
       <section id="about" className="section">
         <div className="panel">
           <div className="sectionHead tight">
             <h2 className="h2">About</h2>
-            <p className="muted">Based in Miami, Florida. Built around speed, clarity, and execution.</p>
+            <p className="muted">
+              Based in Miami, Florida. Focused on reliable supply, clean communication, and smooth export flow.
+            </p>
           </div>
 
           <p className="copy">
-            UNION KOMES TRADING L.L.C. focuses on dependable coordination — fast communication, clean terms,
-            and a logistics-first mindset so clients can move confidently and avoid unnecessary friction.
+            UNION KOMES TRADING L.L.C. specializes in sourcing and supplying used clothing bales from the USA.
+            We keep it simple: quick responses, clear terms, and consistent follow-through so buyers can plan
+            shipments with confidence.
           </p>
 
           <div className="features">
             {[
-              ["Speed", "Short response times & quick turnarounds."],
-              ["Clarity", "Straight answers, simple next steps."],
-              ["Reliability", "Process-driven coordination and updates."],
+              ["Consistent Supply", "Reliable sourcing and straightforward availability updates."],
+              ["Fast Pricing", "Quick quotes based on destination and volume."],
+              ["Export-Minded", "Logistics-first coordination to reduce delays and confusion."],
             ].map(([k, v]) => (
               <div key={k} className="feature">
                 <div className="featureTitle">{k}</div>
@@ -152,13 +163,15 @@ export default function Home() {
           <div className="panel">
             <div className="sectionHead tight">
               <h2 className="h2">Contact</h2>
-              <p className="muted">Send a quick message and we’ll respond with next steps.</p>
+              <p className="muted">
+                Reach out for bale pricing. Include destination + quantity for the fastest quote.
+              </p>
             </div>
 
             <div className="contactLines">
               <div className="line">
                 <span className="label">Location</span>
-                <span className="value">Miami, FL</span>
+                <span className="value">Miami, FL (USA)</span>
               </div>
               <div className="line">
                 <span className="label">Phone</span>
@@ -170,7 +183,7 @@ export default function Home() {
                 <span className="label">Email</span>
                 <a
                   className="valueLink"
-                  href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
+                  href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Pricing%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.&body=Destination%20Country%3A%0AQuantity%20(lbs%20or%20bales)%3A%0APreferred%20Mix%20(men%2Fwomen%2Fkids)%3A%0ANotes%2FRestrictions%3A%0A`}
                 >
                   {email}
                 </a>
@@ -180,9 +193,9 @@ export default function Home() {
             <div className="heroActions">
               <a
                 className="btnPrimary"
-                href={`mailto:${email}?subject=Quote%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
+                href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Pricing%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.&body=Destination%20Country%3A%0AQuantity%20(lbs%20or%20bales)%3A%0APreferred%20Mix%20(men%2Fwomen%2Fkids)%3A%0ANotes%2FRestrictions%3A%0A`}
               >
-                Email Us
+                Email for Pricing
               </a>
               <a className="btnGhost" href={`tel:+1${phoneRaw}`}>
                 Call Now
@@ -195,10 +208,10 @@ export default function Home() {
       <footer className="footer">
         <div className="footerInner">
           <div className="footerText">
-            © {new Date().getFullYear()} UNION KOMES TRADING L.L.C. • Miami, FL
+            © {new Date().getFullYear()} UNION KOMES TRADING L.L.C. • Used Clothing Bales • Miami, FL
           </div>
           <div className="footerLinks">
-            <a href="#services">Services</a>
+            <a href="#services">Bales</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
           </div>
@@ -572,6 +585,28 @@ const css = `
   }
   .footerLinks a{ text-decoration: none; }
   .footerLinks a:hover{ text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ✅ New note card under Services */
+  .note{
+    margin-top: 12px;
+    border-radius: 26px;
+    padding: 16px 18px;
+    background: rgba(79,70,229,.06);
+    border: 1px solid rgba(79,70,229,.16);
+    box-shadow: var(--shadow2);
+  }
+  .noteTitle{
+    font-size: 13px;
+    font-weight: 900;
+    color: rgba(11,18,32,.88);
+  }
+  .noteDesc{
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgba(11,18,32,.70);
+    line-height: 1.7;
+    max-width: 92ch;
+  }
 
   @media (min-width: 860px){
     .nav{ display:flex; }
