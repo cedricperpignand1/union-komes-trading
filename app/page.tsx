@@ -138,7 +138,7 @@ const I18N: Record<
   en: {
     langLabel: "English",
     chooseLanguage: "Language:",
-    navMakeOrder: "Make an Order",
+    navMakeOrder: "Get a Quote",
     navBales: "Bales",
     navAbout: "About",
     navContact: "Contact",
@@ -1420,6 +1420,7 @@ const css = `
     .heroImageWrap{ min-height: 360px; }
   }
 `;
+
 
 
 
