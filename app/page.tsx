@@ -35,7 +35,9 @@ export default function Home() {
   });
 
   const [submitting, setSubmitting] = useState(false);
-  const [status, setStatus] = useState<null | { type: "ok" | "err"; msg: string }>(null);
+  const [status, setStatus] = useState<null | { type: "ok" | "err"; msg: string }>(
+    null
+  );
 
   const poundsNumber = useMemo(() => {
     const n = Number(String(order.pounds).replace(/,/g, ""));
@@ -71,30 +73,28 @@ export default function Home() {
       setSubmitting(true);
 
       const res = await fetch("/api/order", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    ...order,
-    pounds: poundsNumber,
-  }),
-});
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...order,
+          pounds: poundsNumber,
+        }),
+      });
 
-// 👇 THIS PART IS THE FIX
-let data: any = null;
-let text = "";
+      // ✅ Show real error messages
+      let data: any = null;
+      let text = "";
+      try {
+        data = await res.json();
+      } catch {
+        try {
+          text = await res.text();
+        } catch {}
+      }
 
-try {
-  data = await res.json();
-} catch {
-  try {
-    text = await res.text();
-  } catch {}
-}
-
-if (!res.ok) {
-  throw new Error(data?.error || text || `Request failed (${res.status})`);
-}
-
+      if (!res.ok) {
+        throw new Error(data?.error || text || `Request failed (${res.status})`);
+      }
 
       setStatus({ type: "ok", msg: "Order request sent. We’ll contact you shortly." });
 
@@ -128,7 +128,9 @@ if (!res.ok) {
 
         <nav className="nav">
           <a href="#services">Bales</a>
-          <a href="#order">Make an Order</a>
+          <a className="orderLink" href="#order">
+            Make an Order
+          </a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
           <a className="navCta" href="#order">
@@ -150,8 +152,9 @@ if (!res.ok) {
           </h1>
 
           <p className="lead">
-            UNION KOMES TRADING L.L.C. supplies used clothing bales from the USA for export buyers,
-            wholesalers, and resellers — with clear terms, quick communication, and dependable sourcing.
+            UNION KOMES TRADING L.L.C. supplies used clothing bales from the USA for export
+            buyers, wholesalers, and resellers — with clear terms, quick communication,
+            and dependable sourcing.
           </p>
 
           <div className="heroActions">
@@ -169,7 +172,10 @@ if (!res.ok) {
               <div className="metaValue">{phoneDisplay}</div>
             </a>
 
-            <a className="metaItem" href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}>
+            <a
+              className="metaItem"
+              href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}
+            >
               <div className="metaLabel">Email</div>
               <div className="metaValue">{email}</div>
             </a>
@@ -209,17 +215,25 @@ if (!res.ok) {
         </div>
       </section>
 
-      {/* ✅ NEW ORDER PANEL */}
-      <section id="order" className="section">
+      {/* ✅ ORDER SECTION (Featured) */}
+      <section id="order" className="section orderSection">
         <div className="sectionHead">
-          <h2 className="h2">Make an Order</h2>
+          <div className="orderHeadRow">
+            <h2 className="h2">Make an Order</h2>
+            <span className="badge">Fast Order Form</span>
+          </div>
           <p className="muted">
             Fill this out and we’ll receive it instantly by email so we can confirm pricing + next steps.
           </p>
         </div>
 
         <div className="orderGrid">
-          <form className="panel form" onSubmit={submitOrder}>
+          <form className="panel panelFeatured form" onSubmit={submitOrder}>
+            <div className="featuredTop">
+              <div className="featuredTitle">Place your bale request</div>
+              <div className="featuredSub">Mixed or Sorted • Add pounds • Submit</div>
+            </div>
+
             <div className="formRow2">
               <div className="field">
                 <label className="lab">Full Name *</label>
@@ -332,7 +346,10 @@ if (!res.ok) {
               <button className="btnPrimary" type="submit" disabled={!canSubmit}>
                 {submitting ? "Sending..." : "Submit Order"}
               </button>
-              <a className="btnGhost" href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Order%20Request`}>
+              <a
+                className="btnGhost"
+                href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Order%20Request`}
+              >
                 Email Instead
               </a>
             </div>
@@ -342,7 +359,7 @@ if (!res.ok) {
             </div>
           </form>
 
-          <div className="panel orderSide">
+          <div className="panel orderSide orderSideFeatured">
             <div className="sideTitle">What happens next</div>
             <div className="sideList">
               <div className="sideItem">
@@ -357,6 +374,14 @@ if (!res.ok) {
                 <div className="sideK">3</div>
                 <div className="sideV">We reply with pricing + next steps (typically under 24 hours).</div>
               </div>
+            </div>
+
+            <div className="orderSideCTA">
+              <div className="orderSideCTATitle">Need it urgent?</div>
+              <div className="orderSideCTAText">Call now and we’ll lock in the details quickly.</div>
+              <a className="btnPrimary" href={`tel:+1${phoneRaw}`}>
+                Call {phoneDisplay}
+              </a>
             </div>
           </div>
         </div>
@@ -402,7 +427,10 @@ if (!res.ok) {
 
               <div className="line">
                 <span className="label">Email</span>
-                <a className="valueLink" href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}>
+                <a
+                  className="valueLink"
+                  href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}
+                >
                   {email}
                 </a>
               </div>
@@ -450,8 +478,11 @@ const css = `
     --shadow: 0 18px 55px rgba(0,0,0,.45);
     --shadow2: 0 10px 26px rgba(0,0,0,.35);
     --radius: 22px;
-    --accent: #FACC15;
-    --accent2: #22C55E;
+
+    --accent: #FACC15; /* yellow */
+    --accent2: #22C55E; /* green */
+    --orderGlowA: rgba(250,204,21,.14);
+    --orderGlowB: rgba(34,197,94,.11);
   }
 
   * { box-sizing: border-box; }
@@ -489,6 +520,11 @@ const css = `
 
   .nav{ display: none; align-items: center; gap: 18px; font-size: 13px; color: var(--muted); }
   .nav a:hover{ text-decoration: none; color: rgba(255,255,255,.92); }
+
+  .orderLink{
+    color: rgba(255,255,255,.92);
+    font-weight: 900;
+  }
 
   .navCta{
     padding: 10px 14px;
@@ -557,6 +593,7 @@ const css = `
     text-decoration: none !important;
   }
   .btnPrimary:disabled{ opacity: .55; cursor: not-allowed; }
+
   .btnGhost{
     display:inline-flex;
     align-items:center;
@@ -616,16 +653,80 @@ const css = `
     background: linear-gradient(90deg, rgba(250,204,21,.95), rgba(34,197,94,.75));
   }
 
+  .orderHeadRow{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(250,204,21,.28);
+    background: rgba(250,204,21,.12);
+    color: rgba(255,255,255,.92);
+    font-weight: 950;
+    font-size: 12px;
+    box-shadow: var(--shadow2);
+  }
+
   .muted{ margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 72ch; }
 
   .cards{ margin-top: 18px; display:grid; grid-template-columns: 1fr; gap: 12px; }
-
   .card{ border-radius: 26px; padding: 18px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow2); }
   .cardTitle{ font-size: 15px; font-weight: 950; }
   .cardDesc{ margin-top: 8px; font-size: 13px; color: rgba(255,255,255,.74); line-height: 1.7; }
   .cardFoot{ margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.55); }
 
   .panel{ border-radius: 26px; padding: 18px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow2); }
+
+  /* ✅ ORDER: section stands out */
+  .orderSection{
+    position: relative;
+    border-radius: 32px;
+  }
+  .orderSection:before{
+    content:"";
+    position:absolute;
+    inset: -10px;
+    z-index: -1;
+    border-radius: 38px;
+    background:
+      radial-gradient(900px 420px at 20% 20%, var(--orderGlowA), transparent 60%),
+      radial-gradient(900px 420px at 80% 35%, var(--orderGlowB), transparent 60%);
+    filter: blur(6px);
+    opacity: .95;
+  }
+  .orderSection:after{
+    content:"";
+    position:absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 32px;
+    border: 1px solid rgba(250,204,21,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  }
+
+  /* ✅ Featured form panel */
+  .panelFeatured{
+    border: 1px solid rgba(250,204,21,.22);
+    background: linear-gradient(180deg, rgba(250,204,21,.08), rgba(255,255,255,.05));
+    box-shadow: 0 22px 70px rgba(250,204,21,.06), var(--shadow2);
+  }
+  .featuredTop{
+    padding: 12px 12px 14px;
+    border-radius: 18px;
+    background: rgba(0,0,0,.20);
+    border: 1px solid rgba(255,255,255,.10);
+    margin-bottom: 12px;
+  }
+  .featuredTitle{ font-size: 14px; font-weight: 950; }
+  .featuredSub{ margin-top: 4px; font-size: 12px; color: rgba(255,255,255,.66); }
 
   /* ✅ Order form styles */
   .orderGrid{ margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -647,8 +748,8 @@ const css = `
     transition: border-color .12s ease, box-shadow .12s ease;
   }
   .input:focus, .textarea:focus{
-    border-color: rgba(250,204,21,.35);
-    box-shadow: 0 0 0 4px rgba(250,204,21,.12);
+    border-color: rgba(250,204,21,.40);
+    box-shadow: 0 0 0 4px rgba(250,204,21,.14);
   }
 
   .textarea{ resize: vertical; min-height: 110px; }
@@ -667,8 +768,8 @@ const css = `
     box-shadow: var(--shadow2);
   }
   .segBtn.on{
-    border-color: rgba(250,204,21,.35);
-    background: rgba(250,204,21,.12);
+    border-color: rgba(250,204,21,.38);
+    background: rgba(250,204,21,.14);
   }
 
   .alert{
@@ -690,6 +791,11 @@ const css = `
 
   .hint{ margin-top: 10px; font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.6; }
 
+  .orderSideFeatured{
+    border: 1px solid rgba(34,197,94,.18);
+    background: linear-gradient(180deg, rgba(34,197,94,.06), rgba(255,255,255,.04));
+  }
+
   .orderSide{ padding: 18px; }
   .sideTitle{ font-size: 14px; font-weight: 950; }
   .sideList{ margin-top: 12px; display: grid; gap: 10px; }
@@ -700,7 +806,7 @@ const css = `
     align-items: start;
     padding: 12px 12px;
     border-radius: 18px;
-    background: var(--panel2);
+    background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.10);
   }
   .sideK{
@@ -714,6 +820,16 @@ const css = `
   }
   .sideV{ font-size: 13px; color: rgba(255,255,255,.74); line-height: 1.6; }
 
+  .orderSideCTA{
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.10);
+    display:grid;
+    gap: 8px;
+  }
+  .orderSideCTATitle{ font-weight: 950; }
+  .orderSideCTAText{ font-size: 12px; color: rgba(255,255,255,.66); line-height: 1.6; }
+
   .contactLines{ margin-top: 14px; display:grid; gap: 10px; }
   .line{
     display:flex;
@@ -723,16 +839,16 @@ const css = `
     padding: 10px 12px;
     border-radius: 16px;
     border: 1px solid var(--line);
-    background: var(--panel2);
+    background: rgba(255,255,255,.04);
   }
   .label{ font-size: 12px; color: rgba(255,255,255,.58); font-weight: 900; }
-  ..value{ font-size: 13px; color: rgba(255,255,255,.80); }
+  .value{ font-size: 13px; color: rgba(255,255,255,.80); }
   .valueLink{ font-size: 13px; color: rgba(255,255,255,.92); font-weight: 950; }
 
   .footer{ max-width: 1120px; margin: 0 auto; padding: 18px 20px 46px; }
   .footerInner{
     padding-top: 16px;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgba(255,255,255,.10);
     display:flex;
     gap: 12px;
     flex-wrap: wrap;
