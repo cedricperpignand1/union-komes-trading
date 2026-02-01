@@ -5,14 +5,13 @@ const phoneRaw = "7865998099";
 const email = "cedricperpignand@gmail.com";
 
 // ✅ Put your image in /public and set the path here:
-const HERO_PANEL_IMAGE_SRC = "/panel.jpg"; // e.g. /bales.jpg
+const HERO_PANEL_IMAGE_SRC = "/panel.jpg"; // your bales image
 
 export default function Home() {
   return (
     <main className="wrap">
       <header className="header">
         <div className="brand">
-          {/* ✅ Removed the circled UK logo */}
           <div className="brandText">
             <div className="brandName">UNION KOMES TRADING L.L.C.</div>
             <div className="brandSub">Miami, FL • Used Clothing Bales</div>
@@ -76,14 +75,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ✅ Replaced the “What you get” panel with an image */}
-        <div className="heroImageWrap" aria-label="Hero panel image">
-          <img
-            className="heroImage"
-            src={HERO_PANEL_IMAGE_SRC}
-            alt="Used clothing bales ready for export"
-            loading="eager"
-          />
+        {/* ✅ Image panel (cropped/zoomed to remove bottom white space) */}
+        <div className="heroImageWrap" aria-label="Used clothing bales image">
+          <img className="heroImage" src={HERO_PANEL_IMAGE_SRC} alt="Used clothing bales" />
         </div>
       </section>
 
@@ -119,10 +113,10 @@ export default function Home() {
         </div>
 
         <div className="note">
-          <div className="noteTitle">What to include for fastest pricing</div>
+          <div className="noteTitle">For fastest pricing, include:</div>
           <div className="noteDesc">
-            Destination country • Estimated quantity (lbs or bales) • Preferred mix (men/women/kids) •
-            Any restrictions (no shoes, no winter, etc.)
+            Destination country • Quantity (lbs or bales) • Preferred mix (men/women/kids) • Any
+            restrictions (no shoes, no winter, etc.)
           </div>
         </div>
       </section>
@@ -158,7 +152,6 @@ export default function Home() {
       </section>
 
       <section id="contact" className="section">
-        {/* ✅ Form removed — keeping the layout and styling */}
         <div className="contact contactSingle">
           <div className="panel">
             <div className="sectionHead tight">
@@ -173,12 +166,14 @@ export default function Home() {
                 <span className="label">Location</span>
                 <span className="value">Miami, FL (USA)</span>
               </div>
+
               <div className="line">
                 <span className="label">Phone</span>
                 <a className="valueLink" href={`tel:+1${phoneRaw}`}>
                   {phoneDisplay}
                 </a>
               </div>
+
               <div className="line">
                 <span className="label">Email</span>
                 <a
@@ -225,19 +220,26 @@ export default function Home() {
 
 const css = `
   :root{
-    --bg: #ffffff;
-    --text: #0b1220;
-    --muted: rgba(11,18,32,.64);
-    --line: rgba(15,23,42,.10);
-    --shadow: 0 18px 50px rgba(2,6,23,.08);
-    --shadow2: 0 10px 30px rgba(2,6,23,.06);
+    /* ✅ Dark mode */
+    --bg: #070A12;
+    --bg2: #0B1020;
+    --panel: rgba(255,255,255,.06);
+    --panel2: rgba(255,255,255,.045);
+    --text: rgba(255,255,255,.92);
+    --muted: rgba(255,255,255,.68);
+    --muted2: rgba(255,255,255,.55);
+    --line: rgba(255,255,255,.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.45);
+    --shadow2: 0 10px 26px rgba(0,0,0,.35);
     --radius: 22px;
-    --accent: #4f46e5;
-    --accent2: #10b981;
+
+    /* ✅ Yellow headings/accent */
+    --accent: #FACC15;   /* yellow */
+    --accent2: #22C55E;  /* green */
   }
 
   * { box-sizing: border-box; }
-  html, body { padding: 0; margin: 0; }
+  html, body { padding: 0; margin: 0; background: var(--bg); }
   a { color: inherit; text-decoration: none; }
   a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
@@ -253,10 +255,10 @@ const css = `
     inset: 0;
     z-index: -1;
     background:
-      radial-gradient(1200px 700px at 15% 10%, rgba(79,70,229,.10), transparent 55%),
-      radial-gradient(900px 600px at 85% 25%, rgba(16,185,129,.10), transparent 55%),
-      radial-gradient(900px 700px at 40% 90%, rgba(79,70,229,.06), transparent 55%),
-      linear-gradient(#fff, #fff);
+      radial-gradient(1100px 700px at 15% 10%, rgba(250,204,21,.10), transparent 55%),
+      radial-gradient(900px 600px at 85% 25%, rgba(34,197,94,.09), transparent 55%),
+      radial-gradient(900px 700px at 40% 90%, rgba(250,204,21,.07), transparent 55%),
+      linear-gradient(var(--bg), var(--bg));
   }
 
   .header{
@@ -279,8 +281,8 @@ const css = `
   .brandText{ min-width: 0; }
   .brandName{
     font-size: 13px;
-    font-weight: 900;
-    letter-spacing: .45px;
+    font-weight: 950;
+    letter-spacing: .55px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -296,19 +298,20 @@ const css = `
     align-items: center;
     gap: 18px;
     font-size: 13px;
-    color: rgba(11,18,32,.72);
+    color: var(--muted);
   }
   .nav a{ text-decoration: none; }
-  .nav a:hover{ text-decoration: none; color: rgba(11,18,32,.95); }
+  .nav a:hover{ text-decoration: none; color: rgba(255,255,255,.92); }
 
   .navCta{
     padding: 10px 14px;
     border-radius: 14px;
-    background: rgba(79,70,229,.10);
-    border: 1px solid rgba(79,70,229,.18);
-    color: rgba(11,18,32,.95);
-    font-weight: 900;
+    background: rgba(250,204,21,.14);
+    border: 1px solid rgba(250,204,21,.28);
+    color: rgba(255,255,255,.95);
+    font-weight: 950;
   }
+  .navCta:hover{ text-decoration: none; filter: brightness(1.06); }
 
   .hero{
     max-width: 1120px;
@@ -329,11 +332,11 @@ const css = `
     gap: 10px;
     padding: 8px 12px;
     border-radius: 999px;
-    background: rgba(255,255,255,.75);
+    background: rgba(255,255,255,.06);
     border: 1px solid var(--line);
     box-shadow: var(--shadow2);
     font-size: 12px;
-    color: rgba(11,18,32,.75);
+    color: rgba(255,255,255,.75);
   }
 
   .spark{
@@ -348,14 +351,17 @@ const css = `
     font-size: 46px;
     line-height: 1.05;
     letter-spacing: -1px;
+    color: rgba(255,255,255,.96);
   }
+
+  /* ✅ yellow accent for heading */
   .accent{ color: var(--accent); }
 
   .lead{
     margin-top: 14px;
     max-width: 62ch;
     font-size: 16px;
-    color: rgba(11,18,32,.72);
+    color: rgba(255,255,255,.74);
     line-height: 1.7;
   }
 
@@ -366,21 +372,23 @@ const css = `
     flex-wrap: wrap;
   }
 
+  /* ✅ primary = yellow */
   .btnPrimary{
     display:inline-flex;
     align-items:center;
     justify-content:center;
     padding: 12px 16px;
     border-radius: 16px;
-    background: var(--text);
-    color: #fff;
-    font-weight: 900;
+    background: var(--accent);
+    color: rgba(10,12,18,.96);
+    font-weight: 950;
     font-size: 13px;
-    border: 1px solid rgba(2,6,23,.10);
+    border: 1px solid rgba(250,204,21,.35);
     box-shadow: var(--shadow2);
     cursor:pointer;
     text-decoration: none !important;
   }
+  .btnPrimary:hover{ filter: brightness(1.02); transform: translateY(-1px); }
 
   .btnGhost{
     display:inline-flex;
@@ -388,14 +396,15 @@ const css = `
     justify-content:center;
     padding: 12px 16px;
     border-radius: 16px;
-    background: rgba(255,255,255,.80);
-    color: rgba(11,18,32,.92);
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.92);
     font-weight: 900;
     font-size: 13px;
     border: 1px solid var(--line);
     box-shadow: var(--shadow2);
     text-decoration: none !important;
   }
+  .btnGhost:hover{ transform: translateY(-1px); }
 
   .heroMeta{
     margin-top: 18px;
@@ -407,45 +416,52 @@ const css = `
   .metaItem{
     border-radius: var(--radius);
     padding: 14px 14px;
-    background: rgba(255,255,255,.80);
+    background: var(--panel);
     border: 1px solid var(--line);
     box-shadow: var(--shadow2);
-    transition: transform .12s ease, box-shadow .12s ease;
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
     text-decoration: none !important;
   }
   .metaItem:hover{
     transform: translateY(-1px);
     box-shadow: var(--shadow);
+    border-color: rgba(250,204,21,.22);
   }
 
   .metaLabel{
     font-size: 12px;
     font-weight: 900;
-    color: rgba(11,18,32,.62);
+    color: rgba(255,255,255,.60);
   }
   .metaValue{
     margin-top: 4px;
     font-size: 13px;
-    color: rgba(11,18,32,.86);
+    color: rgba(255,255,255,.88);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
+  /* ✅ Image wrapper is dark so even if the photo has white edges, it blends less */
   .heroImageWrap{
     border-radius: 28px;
     overflow: hidden;
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
-    background: rgba(255,255,255,.85);
+    background: #050710;
     min-height: 260px;
+    position: relative;
   }
+
+  /* ✅ Fix the white band: zoom + top bias crop */
   .heroImage{
     width: 100%;
     height: 100%;
     display: block;
     object-fit: cover;
-    object-position: center;
+    object-position: center top;
+    transform: scale(1.10) translateY(-10px);
+    filter: contrast(1.03) saturate(1.05);
   }
 
   .section{
@@ -461,15 +477,28 @@ const css = `
   }
   .sectionHead.tight{ gap: 8px; }
 
+  /* ✅ headings in yellow */
   .h2{
     margin: 0;
     font-size: 26px;
     letter-spacing: -0.5px;
+    color: rgba(255,255,255,.96);
   }
+  .h2::after{
+    content:"";
+    display:block;
+    width: 56px;
+    height: 3px;
+    border-radius: 999px;
+    margin-top: 10px;
+    background: linear-gradient(90deg, rgba(250,204,21,.95), rgba(34,197,94,.75));
+    opacity: .95;
+  }
+
   .muted{
     margin: 0;
     font-size: 13px;
-    color: rgba(11,18,32,.64);
+    color: var(--muted);
     line-height: 1.6;
     max-width: 72ch;
   }
@@ -484,18 +513,18 @@ const css = `
   .card{
     border-radius: 26px;
     padding: 18px;
-    background: rgba(255,255,255,.82);
+    background: var(--panel);
     border: 1px solid var(--line);
     box-shadow: var(--shadow2);
   }
-  .cardTitle{ font-size: 15px; font-weight: 900; }
-  .cardDesc{ margin-top: 8px; font-size: 13px; color: rgba(11,18,32,.72); line-height: 1.7; }
-  .cardFoot{ margin-top: 12px; font-size: 12px; color: rgba(11,18,32,.56); }
+  .cardTitle{ font-size: 15px; font-weight: 950; color: rgba(255,255,255,.93); }
+  .cardDesc{ margin-top: 8px; font-size: 13px; color: rgba(255,255,255,.74); line-height: 1.7; }
+  .cardFoot{ margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.55); }
 
   .panel{
     border-radius: 26px;
     padding: 18px;
-    background: rgba(255,255,255,.82);
+    background: var(--panel);
     border: 1px solid var(--line);
     box-shadow: var(--shadow2);
   }
@@ -503,7 +532,7 @@ const css = `
   .copy{
     margin: 14px 0 0;
     font-size: 13px;
-    color: rgba(11,18,32,.72);
+    color: rgba(255,255,255,.74);
     line-height: 1.85;
     max-width: 78ch;
   }
@@ -517,11 +546,11 @@ const css = `
   .feature{
     border-radius: 20px;
     padding: 14px;
-    background: rgba(255,255,255,.70);
+    background: var(--panel2);
     border: 1px solid var(--line);
   }
-  .featureTitle{ font-weight: 900; font-size: 13px; }
-  .featureDesc{ margin-top: 6px; font-size: 12px; color: rgba(11,18,32,.62); line-height: 1.7; }
+  .featureTitle{ font-weight: 950; font-size: 13px; color: rgba(255,255,255,.92); }
+  .featureDesc{ margin-top: 6px; font-size: 12px; color: rgba(255,255,255,.62); line-height: 1.7; }
 
   .contact{
     margin-top: 18px;
@@ -530,7 +559,6 @@ const css = `
     gap: 12px;
   }
 
-  /* ✅ ensures contact panel stays left and doesn't stretch weirdly */
   .contactSingle{
     grid-template-columns: 1fr;
     max-width: 720px;
@@ -550,17 +578,38 @@ const css = `
     padding: 10px 12px;
     border-radius: 16px;
     border: 1px solid var(--line);
-    background: rgba(255,255,255,.70);
+    background: var(--panel2);
   }
-  .label{ font-size: 12px; color: rgba(11,18,32,.58); font-weight: 800; }
-  .value{ font-size: 13px; color: rgba(11,18,32,.80); }
+  .label{ font-size: 12px; color: rgba(255,255,255,.58); font-weight: 900; }
+  .value{ font-size: 13px; color: rgba(255,255,255,.80); }
   .valueLink{
     font-size: 13px;
-    color: rgba(11,18,32,.88);
-    font-weight: 900;
+    color: rgba(255,255,255,.92);
+    font-weight: 950;
     text-decoration: none;
   }
-  .valueLink:hover{ text-decoration: underline; text-underline-offset: 4px; }
+  .valueLink:hover{ text-decoration: underline; text-underline-offset: 4px; color: var(--accent); }
+
+  .note{
+    margin-top: 12px;
+    border-radius: 26px;
+    padding: 16px 18px;
+    background: rgba(250,204,21,.08);
+    border: 1px solid rgba(250,204,21,.18);
+    box-shadow: var(--shadow2);
+  }
+  .noteTitle{
+    font-size: 13px;
+    font-weight: 950;
+    color: rgba(255,255,255,.92);
+  }
+  .noteDesc{
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgba(255,255,255,.72);
+    line-height: 1.7;
+    max-width: 92ch;
+  }
 
   .footer{
     max-width: 1120px;
@@ -576,37 +625,15 @@ const css = `
     align-items: center;
     justify-content: space-between;
   }
-  .footerText{ font-size: 11px; color: rgba(11,18,32,.55); }
+  .footerText{ font-size: 11px; color: rgba(255,255,255,.55); }
   .footerLinks{
     display:flex;
     gap: 14px;
     font-size: 11px;
-    color: rgba(11,18,32,.60);
+    color: rgba(255,255,255,.62);
   }
   .footerLinks a{ text-decoration: none; }
-  .footerLinks a:hover{ text-decoration: underline; text-underline-offset: 4px; }
-
-  /* ✅ New note card under Services */
-  .note{
-    margin-top: 12px;
-    border-radius: 26px;
-    padding: 16px 18px;
-    background: rgba(79,70,229,.06);
-    border: 1px solid rgba(79,70,229,.16);
-    box-shadow: var(--shadow2);
-  }
-  .noteTitle{
-    font-size: 13px;
-    font-weight: 900;
-    color: rgba(11,18,32,.88);
-  }
-  .noteDesc{
-    margin-top: 6px;
-    font-size: 12px;
-    color: rgba(11,18,32,.70);
-    line-height: 1.7;
-    max-width: 92ch;
-  }
+  .footerLinks a:hover{ text-decoration: underline; text-underline-offset: 4px; color: rgba(255,255,255,.92); }
 
   @media (min-width: 860px){
     .nav{ display:flex; }
@@ -619,10 +646,7 @@ const css = `
     .heroMeta{ grid-template-columns: repeat(3, 1fr); }
     .cards{ grid-template-columns: repeat(3, 1fr); }
     .features{ grid-template-columns: repeat(3, 1fr); }
-
-    /* contact stays single column even on desktop */
     .contact{ grid-template-columns: 1fr; }
-
     .h1{ font-size: 52px; }
     .heroImageWrap{ min-height: 360px; }
   }
