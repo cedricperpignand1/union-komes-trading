@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const phoneDisplay = "786-599-8099";
 const phoneRaw = "7865998099";
-const email = "unionkometrading@gmail.com";
+const email = "unionkomestrading@gmail.com";
 
 // ✅ Put your image in /public and set the path here:
 const HERO_PANEL_IMAGE_SRC = "/panel.jpg";
@@ -1420,6 +1420,7 @@ const css = `
     .heroImageWrap{ min-height: 360px; }
   }
 `;
+
 
 
 
