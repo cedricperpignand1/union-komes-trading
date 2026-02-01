@@ -1,13 +1,107 @@
 "use client";
 
+import { useMemo, useState } from "react";
+
 const phoneDisplay = "786-599-8099";
 const phoneRaw = "7865998099";
 const email = "cedricperpignand@gmail.com";
 
 // ✅ Put your image in /public and set the path here:
-const HERO_PANEL_IMAGE_SRC = "/panel.jpg"; // your bales image
+const HERO_PANEL_IMAGE_SRC = "/panel.jpg";
+
+type OrderForm = {
+  name: string;
+  company: string;
+  phone: string;
+  email: string;
+  address: string;
+  country: string;
+  pounds: string;
+  baleType: "mixed" | "sorted";
+  notes: string;
+};
 
 export default function Home() {
+  const [order, setOrder] = useState<OrderForm>({
+    name: "",
+    company: "",
+    phone: "",
+    email: "",
+    address: "",
+    country: "",
+    pounds: "",
+    baleType: "mixed",
+    notes: "",
+  });
+
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<null | { type: "ok" | "err"; msg: string }>(null);
+
+  const poundsNumber = useMemo(() => {
+    const n = Number(String(order.pounds).replace(/,/g, ""));
+    return Number.isFinite(n) ? n : NaN;
+  }, [order.pounds]);
+
+  const canSubmit =
+    order.name.trim().length >= 2 &&
+    order.address.trim().length >= 6 &&
+    order.country.trim().length >= 2 &&
+    Number.isFinite(poundsNumber) &&
+    poundsNumber > 0 &&
+    !submitting;
+
+  function update<K extends keyof OrderForm>(key: K, value: OrderForm[K]) {
+    setOrder((prev) => ({ ...prev, [key]: value }));
+    setStatus(null);
+  }
+
+  async function submitOrder(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus(null);
+
+    if (!canSubmit) {
+      setStatus({
+        type: "err",
+        msg: "Please fill in: name, address, country, and pounds (must be a positive number).",
+      });
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+
+      const res = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...order,
+          pounds: poundsNumber,
+        }),
+      });
+
+      const data = (await res.json().catch(() => null)) as any;
+      if (!res.ok) throw new Error(data?.error || "Failed to submit order.");
+
+      setStatus({ type: "ok", msg: "Order request sent. We’ll contact you shortly." });
+
+      setOrder({
+        name: "",
+        company: "",
+        phone: "",
+        email: "",
+        address: "",
+        country: "",
+        pounds: "",
+        baleType: "mixed",
+        notes: "",
+      });
+    } catch (err: any) {
+      setStatus({ type: "err", msg: err?.message || "Something went wrong." });
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <main className="wrap">
       <header className="header">
@@ -20,10 +114,11 @@ export default function Home() {
 
         <nav className="nav">
           <a href="#services">Bales</a>
+          <a href="#order">Make an Order</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
-          <a className="navCta" href="#contact">
-            Get Pricing
+          <a className="navCta" href="#order">
+            Order Now
           </a>
         </nav>
       </header>
@@ -46,8 +141,8 @@ export default function Home() {
           </p>
 
           <div className="heroActions">
-            <a className="btnPrimary" href="#contact">
-              Request Pricing
+            <a className="btnPrimary" href="#order">
+              Make an Order
             </a>
             <a className="btnGhost" href="#services">
               View Bale Options
@@ -60,10 +155,7 @@ export default function Home() {
               <div className="metaValue">{phoneDisplay}</div>
             </a>
 
-            <a
-              className="metaItem"
-              href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Pricing%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.`}
-            >
+            <a className="metaItem" href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}>
               <div className="metaLabel">Email</div>
               <div className="metaValue">{email}</div>
             </a>
@@ -75,7 +167,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ✅ Image panel (cropped/zoomed to remove bottom white space) */}
         <div className="heroImageWrap" aria-label="Used clothing bales image">
           <img className="heroImage" src={HERO_PANEL_IMAGE_SRC} alt="Used clothing bales" />
         </div>
@@ -91,18 +182,9 @@ export default function Home() {
 
         <div className="cards">
           {[
-            [
-              "Mixed Used Clothing Bales",
-              "Everyday assorted clothing — a strong option for general resale markets.",
-            ],
-            [
-              "Sorted / Category Bales",
-              "Men / women / kids or category-focused bales depending on availability.",
-            ],
-            [
-              "Logistics & Export Support",
-              "Palletizing, loading coordination, and documentation-friendly terms.",
-            ],
+            ["Mixed Used Clothing Bales", "Everyday assorted clothing — strong option for general resale markets."],
+            ["Sorted / Category Bales", "Men / women / kids or category-focused bales depending on availability."],
+            ["Logistics & Export Support", "Palletizing, loading coordination, and documentation-friendly terms."],
           ].map(([title, desc]) => (
             <div key={title} className="card">
               <div className="cardTitle">{title}</div>
@@ -111,12 +193,157 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
 
-        <div className="note">
-          <div className="noteTitle">For fastest pricing, include:</div>
-          <div className="noteDesc">
-            Destination country • Quantity (lbs or bales) • Preferred mix (men/women/kids) • Any
-            restrictions (no shoes, no winter, etc.)
+      {/* ✅ NEW ORDER PANEL */}
+      <section id="order" className="section">
+        <div className="sectionHead">
+          <h2 className="h2">Make an Order</h2>
+          <p className="muted">
+            Fill this out and we’ll receive it instantly by email so we can confirm pricing + next steps.
+          </p>
+        </div>
+
+        <div className="orderGrid">
+          <form className="panel form" onSubmit={submitOrder}>
+            <div className="formRow2">
+              <div className="field">
+                <label className="lab">Full Name *</label>
+                <input
+                  className="input"
+                  value={order.name}
+                  onChange={(e) => update("name", e.target.value)}
+                  placeholder="Your name"
+                />
+              </div>
+              <div className="field">
+                <label className="lab">Company (optional)</label>
+                <input
+                  className="input"
+                  value={order.company}
+                  onChange={(e) => update("company", e.target.value)}
+                  placeholder="Company name"
+                />
+              </div>
+            </div>
+
+            <div className="formRow2">
+              <div className="field">
+                <label className="lab">Phone (optional)</label>
+                <input
+                  className="input"
+                  value={order.phone}
+                  onChange={(e) => update("phone", e.target.value)}
+                  placeholder="+1 786..."
+                />
+              </div>
+              <div className="field">
+                <label className="lab">Email (optional)</label>
+                <input
+                  className="input"
+                  value={order.email}
+                  onChange={(e) => update("email", e.target.value)}
+                  placeholder="buyer@email.com"
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="lab">Address *</label>
+              <input
+                className="input"
+                value={order.address}
+                onChange={(e) => update("address", e.target.value)}
+                placeholder="Street / City / State / Zip"
+              />
+            </div>
+
+            <div className="formRow2">
+              <div className="field">
+                <label className="lab">Destination Country *</label>
+                <input
+                  className="input"
+                  value={order.country}
+                  onChange={(e) => update("country", e.target.value)}
+                  placeholder="e.g. Guatemala"
+                />
+              </div>
+
+              <div className="field">
+                <label className="lab">Pounds Needed (lbs) *</label>
+                <input
+                  className="input"
+                  value={order.pounds}
+                  onChange={(e) => update("pounds", e.target.value)}
+                  placeholder="e.g. 5000"
+                  inputMode="numeric"
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="lab">Bale Type *</label>
+              <div className="seg">
+                <button
+                  type="button"
+                  className={`segBtn ${order.baleType === "mixed" ? "on" : ""}`}
+                  onClick={() => update("baleType", "mixed")}
+                >
+                  Mixed
+                </button>
+                <button
+                  type="button"
+                  className={`segBtn ${order.baleType === "sorted" ? "on" : ""}`}
+                  onClick={() => update("baleType", "sorted")}
+                >
+                  Sorted
+                </button>
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="lab">Notes (optional)</label>
+              <textarea
+                className="textarea"
+                value={order.notes}
+                onChange={(e) => update("notes", e.target.value)}
+                placeholder="Any restrictions (no shoes, no winter), categories needed, timeline, etc."
+                rows={4}
+              />
+            </div>
+
+            {status && <div className={`alert ${status.type}`}>{status.msg}</div>}
+
+            <div className="heroActions">
+              <button className="btnPrimary" type="submit" disabled={!canSubmit}>
+                {submitting ? "Sending..." : "Submit Order"}
+              </button>
+              <a className="btnGhost" href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Order%20Request`}>
+                Email Instead
+              </a>
+            </div>
+
+            <div className="hint">
+              * Required fields: Name, Address, Country, Pounds. Submits directly to our email.
+            </div>
+          </form>
+
+          <div className="panel orderSide">
+            <div className="sideTitle">What happens next</div>
+            <div className="sideList">
+              <div className="sideItem">
+                <div className="sideK">1</div>
+                <div className="sideV">We receive your order request instantly by email.</div>
+              </div>
+              <div className="sideItem">
+                <div className="sideK">2</div>
+                <div className="sideV">We confirm availability (mixed/sorted) and shipping options.</div>
+              </div>
+              <div className="sideItem">
+                <div className="sideK">3</div>
+                <div className="sideV">We reply with pricing + next steps (typically under 24 hours).</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -135,19 +362,6 @@ export default function Home() {
             We keep it simple: quick responses, clear terms, and consistent follow-through so buyers can plan
             shipments with confidence.
           </p>
-
-          <div className="features">
-            {[
-              ["Consistent Supply", "Reliable sourcing and straightforward availability updates."],
-              ["Fast Pricing", "Quick quotes based on destination and volume."],
-              ["Export-Minded", "Logistics-first coordination to reduce delays and confusion."],
-            ].map(([k, v]) => (
-              <div key={k} className="feature">
-                <div className="featureTitle">{k}</div>
-                <div className="featureDesc">{v}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -156,9 +370,7 @@ export default function Home() {
           <div className="panel">
             <div className="sectionHead tight">
               <h2 className="h2">Contact</h2>
-              <p className="muted">
-                Reach out for bale pricing. Include destination + quantity for the fastest quote.
-              </p>
+              <p className="muted">Reach out for bale pricing or export questions.</p>
             </div>
 
             <div className="contactLines">
@@ -176,21 +388,15 @@ export default function Home() {
 
               <div className="line">
                 <span className="label">Email</span>
-                <a
-                  className="valueLink"
-                  href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Pricing%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.&body=Destination%20Country%3A%0AQuantity%20(lbs%20or%20bales)%3A%0APreferred%20Mix%20(men%2Fwomen%2Fkids)%3A%0ANotes%2FRestrictions%3A%0A`}
-                >
+                <a className="valueLink" href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Inquiry`}>
                   {email}
                 </a>
               </div>
             </div>
 
             <div className="heroActions">
-              <a
-                className="btnPrimary"
-                href={`mailto:${email}?subject=Used%20Clothing%20Bales%20-%20Pricing%20Request%20-%20UNION%20KOMES%20TRADING%20L.L.C.&body=Destination%20Country%3A%0AQuantity%20(lbs%20or%20bales)%3A%0APreferred%20Mix%20(men%2Fwomen%2Fkids)%3A%0ANotes%2FRestrictions%3A%0A`}
-              >
-                Email for Pricing
+              <a className="btnPrimary" href="#order">
+                Make an Order
               </a>
               <a className="btnGhost" href={`tel:+1${phoneRaw}`}>
                 Call Now
@@ -207,6 +413,7 @@ export default function Home() {
           </div>
           <div className="footerLinks">
             <a href="#services">Bales</a>
+            <a href="#order">Make an Order</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
           </div>
@@ -220,22 +427,17 @@ export default function Home() {
 
 const css = `
   :root{
-    /* ✅ Dark mode */
     --bg: #070A12;
-    --bg2: #0B1020;
     --panel: rgba(255,255,255,.06);
     --panel2: rgba(255,255,255,.045);
     --text: rgba(255,255,255,.92);
     --muted: rgba(255,255,255,.68);
-    --muted2: rgba(255,255,255,.55);
     --line: rgba(255,255,255,.10);
     --shadow: 0 18px 55px rgba(0,0,0,.45);
     --shadow2: 0 10px 26px rgba(0,0,0,.35);
     --radius: 22px;
-
-    /* ✅ Yellow headings/accent */
-    --accent: #FACC15;   /* yellow */
-    --accent2: #22C55E;  /* green */
+    --accent: #FACC15;
+    --accent2: #22C55E;
   }
 
   * { box-sizing: border-box; }
@@ -243,11 +445,7 @@ const css = `
   a { color: inherit; text-decoration: none; }
   a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-  .wrap{
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-  }
+  .wrap{ min-height: 100vh; background: var(--bg); color: var(--text); }
 
   .wrap:before{
     content:"";
@@ -271,36 +469,11 @@ const css = `
     gap: 14px;
   }
 
-  .brand{
-    display:flex;
-    align-items:center;
-    gap: 12px;
-    min-width: 0;
-  }
-
   .brandText{ min-width: 0; }
-  .brandName{
-    font-size: 13px;
-    font-weight: 950;
-    letter-spacing: .55px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .brandSub{
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  .brandName{ font-size: 13px; font-weight: 950; letter-spacing: .55px; }
+  .brandSub{ font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-  .nav{
-    display: none;
-    align-items: center;
-    gap: 18px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .nav a{ text-decoration: none; }
+  .nav{ display: none; align-items: center; gap: 18px; font-size: 13px; color: var(--muted); }
   .nav a:hover{ text-decoration: none; color: rgba(255,255,255,.92); }
 
   .navCta{
@@ -311,7 +484,6 @@ const css = `
     color: rgba(255,255,255,.95);
     font-weight: 950;
   }
-  .navCta:hover{ text-decoration: none; filter: brightness(1.06); }
 
   .hero{
     max-width: 1120px;
@@ -320,10 +492,6 @@ const css = `
     display: grid;
     gap: 14px;
     grid-template-columns: 1fr;
-  }
-
-  .heroInner{
-    padding: 12px 2px 4px;
   }
 
   .eyebrow{
@@ -353,26 +521,12 @@ const css = `
     letter-spacing: -1px;
     color: rgba(255,255,255,.96);
   }
-
-  /* ✅ yellow accent for heading */
   .accent{ color: var(--accent); }
 
-  .lead{
-    margin-top: 14px;
-    max-width: 62ch;
-    font-size: 16px;
-    color: rgba(255,255,255,.74);
-    line-height: 1.7;
-  }
+  .lead{ margin-top: 14px; max-width: 62ch; font-size: 16px; color: rgba(255,255,255,.74); line-height: 1.7; }
 
-  .heroActions{
-    margin-top: 18px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
+  .heroActions{ margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
 
-  /* ✅ primary = yellow */
   .btnPrimary{
     display:inline-flex;
     align-items:center;
@@ -388,8 +542,7 @@ const css = `
     cursor:pointer;
     text-decoration: none !important;
   }
-  .btnPrimary:hover{ filter: brightness(1.02); transform: translateY(-1px); }
-
+  .btnPrimary:disabled{ opacity: .55; cursor: not-allowed; }
   .btnGhost{
     display:inline-flex;
     align-items:center;
@@ -404,14 +557,8 @@ const css = `
     box-shadow: var(--shadow2);
     text-decoration: none !important;
   }
-  .btnGhost:hover{ transform: translateY(-1px); }
 
-  .heroMeta{
-    margin-top: 18px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
+  .heroMeta{ margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 10px; }
 
   .metaItem{
     border-radius: var(--radius);
@@ -419,30 +566,11 @@ const css = `
     background: var(--panel);
     border: 1px solid var(--line);
     box-shadow: var(--shadow2);
-    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
     text-decoration: none !important;
   }
-  .metaItem:hover{
-    transform: translateY(-1px);
-    box-shadow: var(--shadow);
-    border-color: rgba(250,204,21,.22);
-  }
+  .metaLabel{ font-size: 12px; font-weight: 900; color: rgba(255,255,255,.60); }
+  .metaValue{ margin-top: 4px; font-size: 13px; color: rgba(255,255,255,.88); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  .metaLabel{
-    font-size: 12px;
-    font-weight: 900;
-    color: rgba(255,255,255,.60);
-  }
-  .metaValue{
-    margin-top: 4px;
-    font-size: 13px;
-    color: rgba(255,255,255,.88);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  /* ✅ Image wrapper is dark so even if the photo has white edges, it blends less */
   .heroImageWrap{
     border-radius: 28px;
     overflow: hidden;
@@ -450,10 +578,7 @@ const css = `
     box-shadow: var(--shadow);
     background: #050710;
     min-height: 260px;
-    position: relative;
   }
-
-  /* ✅ Fix the white band: zoom + top bias crop */
   .heroImage{
     width: 100%;
     height: 100%;
@@ -464,26 +589,9 @@ const css = `
     filter: contrast(1.03) saturate(1.05);
   }
 
-  .section{
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 44px 20px;
-  }
+  .section{ max-width: 1120px; margin: 0 auto; padding: 44px 20px; }
 
-  .sectionHead{
-    display:flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .sectionHead.tight{ gap: 8px; }
-
-  /* ✅ headings in yellow */
-  .h2{
-    margin: 0;
-    font-size: 26px;
-    letter-spacing: -0.5px;
-    color: rgba(255,255,255,.96);
-  }
+  .h2{ margin: 0; font-size: 26px; letter-spacing: -0.5px; color: rgba(255,255,255,.96); }
   .h2::after{
     content:"";
     display:block;
@@ -492,84 +600,107 @@ const css = `
     border-radius: 999px;
     margin-top: 10px;
     background: linear-gradient(90deg, rgba(250,204,21,.95), rgba(34,197,94,.75));
-    opacity: .95;
   }
 
-  .muted{
-    margin: 0;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-    max-width: 72ch;
-  }
+  .muted{ margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 72ch; }
 
-  .cards{
-    margin-top: 18px;
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+  .cards{ margin-top: 18px; display:grid; grid-template-columns: 1fr; gap: 12px; }
 
-  .card{
-    border-radius: 26px;
-    padding: 18px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow2);
-  }
-  .cardTitle{ font-size: 15px; font-weight: 950; color: rgba(255,255,255,.93); }
+  .card{ border-radius: 26px; padding: 18px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow2); }
+  .cardTitle{ font-size: 15px; font-weight: 950; }
   .cardDesc{ margin-top: 8px; font-size: 13px; color: rgba(255,255,255,.74); line-height: 1.7; }
   .cardFoot{ margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.55); }
 
-  .panel{
-    border-radius: 26px;
-    padding: 18px;
-    background: var(--panel);
-    border: 1px solid var(--line);
+  .panel{ border-radius: 26px; padding: 18px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow2); }
+
+  /* ✅ Order form styles */
+  .orderGrid{ margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .form{ padding: 18px; }
+
+  .field{ display: grid; gap: 8px; margin-top: 12px; }
+  .field:first-child{ margin-top: 0; }
+
+  .lab{ font-size: 12px; color: rgba(255,255,255,.70); font-weight: 900; }
+
+  .input, .textarea{
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.22);
+    color: rgba(255,255,255,.92);
+    padding: 12px 12px;
+    outline: none;
+    transition: border-color .12s ease, box-shadow .12s ease;
+  }
+  .input:focus, .textarea:focus{
+    border-color: rgba(250,204,21,.35);
+    box-shadow: 0 0 0 4px rgba(250,204,21,.12);
+  }
+
+  .textarea{ resize: vertical; min-height: 110px; }
+
+  .formRow2{ display: grid; grid-template-columns: 1fr; gap: 12px; }
+
+  .seg{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .segBtn{
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.90);
+    padding: 12px 12px;
+    font-weight: 950;
+    cursor: pointer;
     box-shadow: var(--shadow2);
   }
+  .segBtn.on{
+    border-color: rgba(250,204,21,.35);
+    background: rgba(250,204,21,.12);
+  }
 
-  .copy{
-    margin: 14px 0 0;
+  .alert{
+    margin-top: 12px;
+    padding: 12px 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.10);
     font-size: 13px;
-    color: rgba(255,255,255,.74);
-    line-height: 1.85;
-    max-width: 78ch;
+    line-height: 1.5;
+  }
+  .alert.ok{
+    background: rgba(34,197,94,.10);
+    border-color: rgba(34,197,94,.22);
+  }
+  .alert.err{
+    background: rgba(239,68,68,.10);
+    border-color: rgba(239,68,68,.24);
   }
 
-  .features{
-    margin-top: 16px;
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .feature{
-    border-radius: 20px;
-    padding: 14px;
-    background: var(--panel2);
-    border: 1px solid var(--line);
-  }
-  .featureTitle{ font-weight: 950; font-size: 13px; color: rgba(255,255,255,.92); }
-  .featureDesc{ margin-top: 6px; font-size: 12px; color: rgba(255,255,255,.62); line-height: 1.7; }
+  .hint{ margin-top: 10px; font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.6; }
 
-  .contact{
-    margin-top: 18px;
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .contactSingle{
-    grid-template-columns: 1fr;
-    max-width: 720px;
-  }
-
-  .contactLines{
-    margin-top: 14px;
-    display:grid;
+  .orderSide{ padding: 18px; }
+  .sideTitle{ font-size: 14px; font-weight: 950; }
+  .sideList{ margin-top: 12px; display: grid; gap: 10px; }
+  .sideItem{
+    display: grid;
+    grid-template-columns: 26px 1fr;
     gap: 10px;
+    align-items: start;
+    padding: 12px 12px;
+    border-radius: 18px;
+    background: var(--panel2);
+    border: 1px solid rgba(255,255,255,.10);
   }
+  .sideK{
+    width: 26px; height: 26px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius: 999px;
+    background: rgba(250,204,21,.14);
+    border: 1px solid rgba(250,204,21,.22);
+    font-weight: 950;
+    font-size: 12px;
+  }
+  .sideV{ font-size: 13px; color: rgba(255,255,255,.74); line-height: 1.6; }
 
+  .contactLines{ margin-top: 14px; display:grid; gap: 10px; }
   .line{
     display:flex;
     align-items: baseline;
@@ -581,41 +712,10 @@ const css = `
     background: var(--panel2);
   }
   .label{ font-size: 12px; color: rgba(255,255,255,.58); font-weight: 900; }
-  .value{ font-size: 13px; color: rgba(255,255,255,.80); }
-  .valueLink{
-    font-size: 13px;
-    color: rgba(255,255,255,.92);
-    font-weight: 950;
-    text-decoration: none;
-  }
-  .valueLink:hover{ text-decoration: underline; text-underline-offset: 4px; color: var(--accent); }
+  ..value{ font-size: 13px; color: rgba(255,255,255,.80); }
+  .valueLink{ font-size: 13px; color: rgba(255,255,255,.92); font-weight: 950; }
 
-  .note{
-    margin-top: 12px;
-    border-radius: 26px;
-    padding: 16px 18px;
-    background: rgba(250,204,21,.08);
-    border: 1px solid rgba(250,204,21,.18);
-    box-shadow: var(--shadow2);
-  }
-  .noteTitle{
-    font-size: 13px;
-    font-weight: 950;
-    color: rgba(255,255,255,.92);
-  }
-  .noteDesc{
-    margin-top: 6px;
-    font-size: 12px;
-    color: rgba(255,255,255,.72);
-    line-height: 1.7;
-    max-width: 92ch;
-  }
-
-  .footer{
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 18px 20px 46px;
-  }
+  .footer{ max-width: 1120px; margin: 0 auto; padding: 18px 20px 46px; }
   .footerInner{
     padding-top: 16px;
     border-top: 1px solid var(--line);
@@ -626,27 +726,15 @@ const css = `
     justify-content: space-between;
   }
   .footerText{ font-size: 11px; color: rgba(255,255,255,.55); }
-  .footerLinks{
-    display:flex;
-    gap: 14px;
-    font-size: 11px;
-    color: rgba(255,255,255,.62);
-  }
-  .footerLinks a{ text-decoration: none; }
-  .footerLinks a:hover{ text-decoration: underline; text-underline-offset: 4px; color: rgba(255,255,255,.92); }
+  .footerLinks{ display:flex; gap: 14px; font-size: 11px; color: rgba(255,255,255,.62); }
 
   @media (min-width: 860px){
     .nav{ display:flex; }
-    .hero{
-      grid-template-columns: 1.2fr .8fr;
-      align-items: start;
-      gap: 18px;
-      padding-top: 36px;
-    }
+    .hero{ grid-template-columns: 1.2fr .8fr; gap: 18px; padding-top: 36px; }
     .heroMeta{ grid-template-columns: repeat(3, 1fr); }
     .cards{ grid-template-columns: repeat(3, 1fr); }
-    .features{ grid-template-columns: repeat(3, 1fr); }
-    .contact{ grid-template-columns: 1fr; }
+    .formRow2{ grid-template-columns: 1fr 1fr; }
+    .orderGrid{ grid-template-columns: 1.2fr .8fr; }
     .h1{ font-size: 52px; }
     .heroImageWrap{ min-height: 360px; }
   }
